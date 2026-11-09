@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#3b2314">
+<title>Diện Tướng Học — TIEN.TQN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --frame:#3b2314; --frame2:#5a3519; --paper:#fbf7ef; --paper2:#f4ecdd; --line:#e4d6bd;
+  --ink:#2f1f12; --ink2:#5b4632; --mute:#8a7660; --brown:#6b3f1d; --gold:#c48a12; --gold2:#e3a92b;
+  --kim:#7d8794; --moc:#3c8a4c; --hoa:#c4412a; --tho:#a8742a; --thuy:#2d5d97;
+  --good:#3c8a4c; --bad:#b8452f; --warn:#c48a12;
+  --serif:'Noto Serif',Georgia,'Times New Roman',serif; --sans:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --r:16px; --sh:0 6px 24px rgba(40,20,5,.18);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--frame);background-image:radial-gradient(circle at 20% 0%,#5a3519 0,transparent 55%),radial-gradient(circle at 100% 100%,#4a2b16 0,transparent 50%);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:600px;margin:0 auto;padding:0 14px calc(90px + env(safe-area-inset-bottom))}
+/* header */
+.top{position:sticky;top:0;z-index:30;background:rgba(59,35,20,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(227,169,43,.25)}
+.top-in{max-width:600px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:50%;flex:0 0 38px;display:grid;place-items:center;background:conic-gradient(var(--kim) 0 20%,var(--thuy) 0 40%,var(--moc) 0 60%,var(--hoa) 0 80%,var(--tho) 0);box-shadow:0 0 0 2px var(--gold2)}
+.logo span{width:26px;height:26px;border-radius:50%;background:var(--frame);display:grid;place-items:center;color:var(--gold2);font-family:var(--serif);font-weight:700;font-size:13px}
+.brand{flex:1;min-width:0}
+.brand h1{margin:0;font-family:var(--serif);font-size:19px;color:#fff3dc;letter-spacing:.3px;line-height:1.2}
+.brand small{color:var(--gold2);font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase}
+.icon-btn{border:1px solid rgba(227,169,43,.45);background:transparent;color:#fbe7c0;border-radius:12px;padding:7px 11px;font-size:13px;font-weight:600}
+/* cards */
+.card{background:var(--paper);border-radius:var(--r);box-shadow:var(--sh);margin:14px 0;overflow:hidden}
+.card-pad{padding:18px 16px}
+.h2{font-family:var(--serif);color:var(--brown);font-size:22px;margin:0 0 4px;line-height:1.3}
+.h3{font-family:var(--serif);color:var(--brown);font-size:17.5px;margin:18px 0 8px;line-height:1.35}
+.rule{height:2px;background:linear-gradient(90deg,var(--brown),transparent);margin:10px 0 14px;border:0}
+.sub{color:var(--mute);font-size:13.5px;margin:0}
+.gold{color:var(--gold)}
+/* mode toggle */
+.seg{display:flex;background:rgba(255,255,255,.08);border:1px solid rgba(227,169,43,.3);border-radius:14px;padding:4px;margin:14px 0 0}
+.seg button{flex:1;border:0;background:transparent;color:#f3dfbb;padding:9px 6px;border-radius:10px;font-size:14px;font-weight:600}
+.seg button.on{background:var(--gold2);color:var(--frame)}
+/* photo dock */
+.dock{display:none;align-items:center;gap:10px;background:rgba(255,255,255,.07);border:1px dashed rgba(227,169,43,.45);border-radius:14px;padding:8px;margin-top:12px;color:#f3dfbb;font-size:13px}
+.dock.show{display:flex}
+.dock img{width:54px;height:54px;object-fit:cover;border-radius:10px;border:2px solid var(--gold2)}
+.dock .x{margin-left:auto;background:transparent;border:0;color:#f3dfbb;font-size:20px}
+/* progress */
+.steps{display:flex;gap:4px;margin:14px 0 4px}
+.steps i{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.15)}
+.steps i.done{background:var(--gold)}
+.steps i.cur{background:var(--gold2);box-shadow:0 0 8px var(--gold2)}
+.stepmeta{display:flex;justify-content:space-between;color:#e8d3ad;font-size:12.5px}
+/* fields */
+.field{padding:14px 0;border-top:1px solid var(--line)}
+.field:first-child{border-top:0;padding-top:4px}
+.flabel{font-weight:700;font-size:15px;color:var(--ink);display:flex;align-items:center;gap:6px}
+.flabel .el{font-size:10.5px;font-weight:700;color:#fff;padding:1px 7px;border-radius:20px}
+.fhint{font-size:12.8px;color:var(--mute);margin:2px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1.5px solid var(--line);background:#fff;color:var(--ink2);border-radius:22px;padding:7px 13px;font-size:14px;line-height:1.3;transition:all .15s;text-align:left}
+.chip.on{background:var(--brown);border-color:var(--brown);color:#fff8ea;box-shadow:0 3px 10px rgba(107,63,29,.3)}
+.chip.multi.on{background:var(--gold);border-color:var(--gold)}
+.meaning{margin-top:8px;font-size:13.2px;color:var(--ink2);background:var(--paper2);border-left:3px solid var(--gold);padding:7px 10px;border-radius:0 8px 8px 0;display:none}
+.meaning.show{display:block}
+.inp{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font-size:16px;font-family:inherit;background:#fff;color:var(--ink)}
+.inp:focus{outline:none;border-color:var(--gold)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.upload{display:flex;align-items:center;justify-content:center;gap:8px;border:2px dashed var(--line);border-radius:14px;padding:16px;color:var(--mute);font-size:14px;background:#fff}
+.upload.has{padding:8px}
+.upload img{max-width:100%;max-height:260px;border-radius:10px}
+.note{font-size:13px;color:var(--ink2);background:#fff6e2;border:1px solid #f1dcae;border-radius:12px;padding:10px 12px;margin-top:10px}
+/* nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(59,35,20,.96);border-top:1px solid rgba(227,169,43,.25);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+.nav-in{max-width:600px;margin:0 auto;display:flex;gap:10px}
+.btn{border:0;border-radius:14px;padding:13px 16px;font-size:15.5px;font-weight:700}
+.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#2b1709;flex:1}
+.btn-ghost{background:transparent;color:#f3dfbb;border:1.5px solid rgba(227,169,43,.5)}
+.btn-light{background:var(--paper2);color:var(--brown);border:1px solid var(--line)}
+.btn:disabled{opacity:.45}
+/* accordion */
+.acc-h{display:flex;align-items:center;gap:10px;padding:15px 16px;cursor:pointer;user-select:none}
+.acc-h .t{flex:1;font-family:var(--serif);font-weight:700;color:var(--brown);font-size:16.5px;line-height:1.3}
+.acc-h .t small{display:block;font-family:var(--sans);font-weight:400;font-size:12.5px;color:var(--mute)}
+.badge{font-size:12px;background:var(--paper2);color:var(--brown);border-radius:20px;padding:2px 9px;font-weight:700;white-space:nowrap}
+.badge.full{background:var(--brown);color:#fff}
+.chev{transition:transform .2s;color:var(--gold)}
+.acc.open .chev{transform:rotate(180deg)}
+.acc-b{display:none;padding:0 16px 16px}
+.acc.open .acc-b{display:block}
+/* results */
+.hero{background:linear-gradient(160deg,#fffaf0,#f3e6cc);text-align:center;padding:22px 16px 18px;position:relative}
+.hero .who{font-size:13px;color:var(--mute);letter-spacing:.5px}
+.hero .name{font-family:var(--serif);font-size:24px;color:var(--ink);margin:2px 0 10px;font-weight:700}
+.seal{width:118px;height:118px;margin:4px auto 8px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--serif);box-shadow:inset 0 0 0 5px rgba(255,255,255,.35),0 8px 22px rgba(0,0,0,.25)}
+.seal b{display:block;font-size:34px;line-height:1}
+.seal span{font-size:12.5px;letter-spacing:1px;opacity:.95}
+.hero .tag{font-family:var(--serif);font-style:italic;color:var(--brown);font-size:15.5px;margin:4px 6px 12px}
+.ovr{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.ovr .chip{font-size:13px;padding:5px 11px}
+.lead{font-family:var(--serif);font-size:16.5px;line-height:1.75;color:var(--ink)}
+.lead p{margin:0 0 12px}
+.lead p:first-letter{}
+.p{margin:0 0 10px}
+.k{font-weight:700;color:var(--brown)}
+.mini{font-size:13px;color:var(--mute)}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.charts figure{margin:0;text-align:center}
+.charts figcaption{font-size:12.5px;color:var(--mute);font-weight:600;margin-top:-4px}
+.charts svg{width:100%;height:auto}
+.tri{display:grid;grid-template-columns:1fr;gap:10px}
+.tri .col{border-radius:12px;padding:12px;background:#fff;border:1px solid var(--line)}
+.tri .col h4{margin:0 0 6px;font-size:13px;letter-spacing:1.5px;color:var(--gold);display:flex;align-items:center;gap:6px}
+.it{display:flex;gap:8px;padding:6px 0;border-top:1px dashed var(--line);font-size:14px}
+.it:first-of-type{border-top:0}
+.it .m{flex:0 0 20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:2px}
+.it.y .m{background:var(--brown);color:#fff}
+.it.n .m{background:var(--paper2);color:#c9b89c}
+.it.n .tt{color:#a7957d}
+.it .tt b{display:block;font-weight:600}
+.it .tt em{font-style:normal;font-size:13px;color:var(--ink2)}
+.meter{margin:6px 0 2px}
+.meter .lbl{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--ink2)}
+.bar{height:9px;border-radius:6px;background:var(--paper2);overflow:hidden;margin-top:3px}
+.bar i{display:block;height:100%;border-radius:6px}
+.pill{display:inline-block;font-size:12px;font-weight:700;border-radius:20px;padding:2px 9px;margin:0 4px 4px 0}
+.pill.g{background:#e3f1e2;color:var(--good)}.pill.b{background:#f8e2dc;color:var(--bad)}.pill.w{background:#fbefd2;color:#8f6409}.pill.n{background:var(--paper2);color:var(--ink2)}
+.organ{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 13px;margin:10px 0}
+.organ h4{margin:0 0 6px;font-family:var(--serif);color:var(--brown);font-size:16px;display:flex;align-items:center;gap:8px}
+.organ h4 .el{font-family:var(--sans);font-size:10.5px;color:#fff;padding:1px 7px;border-radius:20px}
+.organ ul{margin:4px 0 0;padding-left:18px}
+.organ li{margin:3px 0}
+.quote{font-family:var(--serif);font-style:italic;color:var(--brown);border-left:3px solid var(--gold);padding:4px 0 4px 12px;margin:10px 0}
+.lt{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.lt:first-child{border-top:0}
+.lt .dot{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:700;font-family:var(--serif);flex:0 0 38px}
+.lt .bd{flex:1;min-width:0}
+.lt .bd b{font-size:14.5px}
+.lt .bd div{font-size:12.5px;color:var(--mute)}
+.lt .sc{font-weight:700;font-size:15px;min-width:40px;text-align:right}
+.asp{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:4px 0 12px}
+.asp button{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 4px;font-size:13px;font-weight:600;color:var(--ink2);line-height:1.25}
+.asp button .ic{display:block;font-size:19px;margin-bottom:2px}
+.asp button.on{background:var(--brown);color:#fff;border-color:var(--brown)}
+.path{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:13px;background:var(--paper2);border-radius:12px;padding:9px 10px;margin:4px 0 10px}
+.path .ar{color:var(--gold)}
+.conf{border-radius:14px;border:1px solid var(--line);background:#fff;margin:10px 0;overflow:hidden}
+.conf .ch{padding:10px 12px;font-weight:700;color:#fff;background:var(--brown);font-size:14.5px}
+.conf .cb{padding:10px 12px;font-size:14.3px}
+.conf .cb div{margin:4px 0}
+.conf .lb{font-size:11.5px;font-weight:700;letter-spacing:1px;color:var(--gold);text-transform:uppercase;display:block}
+.warnbox{background:#fdf0ec;border:1px solid #f0c9bd;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14px}
+.goodbox{background:#eef6ec;border:1px solid #cfe5cb;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14px}
+.closing{text-align:center;font-family:var(--serif);color:var(--brown)}
+.closing .three{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:10px 0}
+.res-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0}
+/* sheet & toast */
+.sheet{position:fixed;inset:0;z-index:60;background:rgba(20,10,3,.6);display:none;align-items:flex-end;justify-content:center}
+.sheet.show{display:flex}
+.sheet-in{background:var(--paper);width:100%;max-width:600px;border-radius:20px 20px 0 0;max-height:82vh;overflow:auto;padding:16px 16px calc(20px + env(safe-area-inset-bottom))}
+.sheet-in.img{background:transparent;text-align:center;padding:14px}
+.sheet-in.img img{max-width:100%;max-height:78vh;border-radius:12px}
+.rec{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.rec .dot{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-family:var(--serif)}
+.rec .bd{flex:1}
+.rec .bd b{display:block}
+.rec .bd span{font-size:12.5px;color:var(--mute)}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:#2b1709;color:#fbe7c0;padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;transition:all .25s;z-index:80;pointer-events:none;max-width:88vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.el{display:inline-block;font-size:10.5px;font-weight:700;color:#fff;padding:1px 8px;border-radius:20px;font-family:var(--sans);vertical-align:middle;line-height:1.6}
+.hide{display:none!important}
+.fade{animation:fd .35s ease}
+@keyframes fd{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (min-width:520px){.tri{grid-template-columns:1fr 1fr 1fr}.tri .it{font-size:13.5px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="logo"><span>相</span></div>
+  <div class="brand"><h1>Diện Tướng Học</h1><small>TIEN.TQN</small></div>
+  <button class="icon-btn" id="btn-records">Hồ sơ</button>
+</div></header>
+
+<div class="wrap">
+  <section id="scr-input">
+    <div class="seg" id="mode-seg"><button data-m="wizard" class="on">Từng bước</button><button data-m="form">Toàn bộ</button></div>
+    <div class="dock" id="dock"><img id="dock-img" alt="ảnh"><div>Ảnh đối chiếu<br><span style="opacity:.7">Chạm để phóng to</span></div><button class="x" id="dock-x" aria-label="Bỏ ảnh">×</button></div>
+    <div id="wiz"></div>
+    <div id="formv" class="hide"></div>
+  </section>
+  <section id="scr-result" class="hide"></section>
+</div>
+
+<nav class="nav" id="nav"><div class="nav-in" id="nav-in"></div></nav>
+<div class="sheet" id="sheet"><div class="sheet-in" id="sheet-in"></div></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="file" accept="image/*" class="hide">
+<script>
+'use strict';
+/* =========================================================
+   DIỆN TƯỚNG HỌC — TIEN.TQN
+   Nguồn tri thức: tài liệu "Diện tướng học – Tiến Trần", bộ slide
+   Tứ diện tướng, và phần bổ sung Lục thân trong diện tướng.
+   ========================================================= */
+
+const HANH = {kim:'Kim',moc:'Mộc',hoa:'Hỏa',tho:'Thổ',thuy:'Thủy'};
+const HCOLOR = {kim:'#7d8794',moc:'#3c8a4c',hoa:'#c4412a',tho:'#a8742a',thuy:'#2d5d97'};
+const SINH = {moc:'hoa',hoa:'tho',tho:'kim',kim:'thuy',thuy:'moc'};
+const KHAC = {moc:'tho',tho:'thuy',thuy:'hoa',hoa:'kim',kim:'moc'};
+const sinhRa = x => Object.keys(SINH).find(k=>SINH[k]===x);
+const khacBoi = x => Object.keys(KHAC).find(k=>KHAC[k]===x);
+const ORDER5 = ['kim','moc','thuy','hoa','tho'];
+
+/* Bộ vị theo ngũ hành */
+const BOVI = {
+  hoa:{ten:'Mắt', y:'nhân sinh quan, trí huệ, cảm xúc'},
+  thuy:{ten:'Tai', y:'hạnh phúc tinh thần, cảm thụ tinh thần'},
+  kim:{ten:'Miệng', y:'giao tiếp, các mối quan hệ'},
+  tho:{ten:'Mũi · Gò má · Trán · Cằm', y:'năng lượng sống, ý chí, nghị lực'},
+  moc:{ten:'Tóc · Lông mày', y:'thái độ sống, lập trường'}
+};
+
+/* ---------- Trường nhập ----------
+   opts: [giá trị, nhãn, ý nghĩa theo tài liệu] */
+const F = {
+  mat_dang:{l:'Khuôn mặt tổng thể', h:'Nhìn toàn thể trước khi xét từng bộ vị — đây là gốc để định diện tướng.', o:[
+    ['moc','Dài, có thịt, không lộ xương; nét ôn hòa, nhã nhặn','Hình của Mộc — chữ Nhân: hòa đồng, yêu thương, dễ gần.'],
+    ['kim','Góc cạnh, gò má cứng, cằm đẩy, nét nghiêm, rõ ràng','Hình của Kim — chữ Nghĩa: nguyên tắc, kiên định lập trường.'],
+    ['hoa','Tròn đầy, má bầu bĩnh, nét tươi, rạng rỡ','Hình của Hỏa — chữ Lễ: kết nối, giao tiếp, muốn được chú ý.'],
+    ['tho','Dày, vững chãi, xương chắc, nét trầm ổn','Hình của Thổ — chữ Tín: trung tín, vững chãi, trầm ổn.'],
+    ['thuy','Pha trộn, khó xếp vào một dạng, nét hay biến đổi','Thủy tướng — ít gặp, khó quan sát, là sự kết hợp của các tướng khác.']]},
+  cot:{l:'Khung xương', h:'Dùng để xét Hình – Thần có tương phối hay không.', o:[
+    ['to','Xương to, chắc',''],['vua','Vừa phải',''],['nho','Xương nhỏ, mảnh','']]},
+  hanh_xu:{l:'Cách hành xử thường ngày', h:'So với khung xương để thấy Hình – Thần có xung nhau không.', o:[
+    ['manh','Mạnh mẽ, dứt khoát',''],['vua','Cân bằng',''],['mem','Mềm mại, nhẹ nhàng','']]},
+  toc:{l:'Tóc', h:'Tóc thuộc Mộc — thái độ sống.', o:[
+    ['khoe','Mềm, dày, khỏe','Bù khuyết cho tướng Kim: làm mềm sự cứng rắn.'],['thuong','Bình thường',''],['thua','Thưa, yếu','Mộc khí (thái độ sống) kém nuôi dưỡng.']]},
+  co:{l:'Cổ', h:'', o:[
+    ['dai','Cổ dài','Tầm nhìn xa, biết nhiều nhưng hành động chậm — hợp làm quân sư.'],['vua','Vừa',''],['ngan','Cổ ngắn','Hành động nhanh — hợp đội hành động.']]},
+  dinh_dau:{l:'Đỉnh đầu', h:'Đặt viên bi lên đỉnh đầu có lăn đi không?', o:[
+    ['binh','Bình thường, đầy',''],['lom','Lõm (đặt bi không rơi)','Dễ trầm uất, suy nghĩ lệch, dễ bị cuốn theo tà thuyết (thuộc phản Mộc).']]},
+
+  td_thuong:{l:'Thượng đình (chân tóc → lông mày)', h:'Trí lực: tư duy, trí tuệ, cái tôi trong suy nghĩ.', o:[
+    ['troi','Nổi trội','Trí lực mạnh.'],['can','Cân đối',''],['kem','Ngắn / hẹp','Trí lực chưa được nâng đỡ.']]},
+  td_trung:{l:'Trung đình (lông mày → đầu mũi)', h:'Hoạt lực: năng lượng sống, sinh mệnh lực, khả năng hành động.', o:[
+    ['troi','Nổi trội','Hoạt lực mạnh.'],['can','Cân đối',''],['kem','Ngắn / yếu','Sinh mệnh lực chưa dồi dào.']]},
+  td_ha:{l:'Hạ đình (đầu mũi → cằm)', h:'Kết nối xã hội: giao tiếp, các mối quan hệ.', o:[
+    ['troi','Nổi trội','Kết nối xã hội mạnh.'],['can','Cân đối',''],['kem','Ngắn / lẹp','Kết nối xã hội kém nâng đỡ.']]},
+  cam_dot:{l:'Bộ vị "cắm" — thái quá, đột biến so với tổng thể', h:'Một bộ phận lớn/nhô bất thường, lệch hẳn so với phần còn lại (có thể chọn nhiều).', m:1, o:[
+    ['tran','Trán',''],['mat','Mắt',''],['mui','Mũi',''],['goma','Gò má',''],['mieng','Miệng',''],['cam','Cằm',''],['khong','Không có','']]},
+
+  tran_hinh:{l:'Dáng trán', h:'', o:[
+    ['do','Trán dô','Cái tôi trong tư tưởng cao, suy nghĩ độc lập.'],
+    ['thang','Trán thẳng','Cân bằng giữa tư duy cá nhân và tư duy của người khác.'],
+    ['bot','Trán bợt (vát ra sau)','Dễ bị ảnh hưởng bởi suy nghĩ người khác.']]},
+  tran_cao:{l:'Chiều cao trán', h:'', o:[
+    ['cao','Cao','Óc suy tưởng: trừu tượng, tưởng tượng, sáng tạo.'],['vua','Vừa',''],['thap','Thấp','']]},
+  tran_rong:{l:'Bề rộng trán', h:'', o:[
+    ['rong','Rộng','Óc thực tế: logic, tư duy thực tế.'],['vua','Vừa',''],['hep','Hẹp','Nét xung đột với Kim, Thổ.']]},
+  tran_phang:{l:'Mặt trán', h:'', o:[
+    ['phang','Phẳng, đầy','Một trong ba phần phúc trí ở trán (cao – phẳng – rộng).'],['khong','Lồi lõm, có ngấn','']]},
+  tran_toc:{l:'Chân tóc', h:'', o:[
+    ['gon','Gọn, sáng',''],['xam','Tóc xâm phạm xuống trán','Nét xung đột với Kim, Thổ.']]},
+  an_duong:{l:'Ấn đường (giữa hai đầu mày)', h:'Sức khỏe tinh thần.', o:[
+    ['sang','Sáng, rộng, sạch','Tinh thần sáng sủa, vững.'],['toi','Tối, hẹp, có vết','Sức khỏe tinh thần hao tổn.']]},
+
+  lm_dam:{l:'Độ đậm lông mày', h:'Lông mày thuộc Mộc — lập trường, thái độ sống.', o:[
+    ['dam','Đậm','Lập trường kiên định, nguyên tắc, khó lay chuyển.'],['vua','Vừa',''],['nhat','Nhạt','Lập trường linh hoạt, dễ thay đổi.']]},
+  lm_matdo:{l:'Mật độ', h:'', o:[
+    ['ram','Rậm, dày',''],['vua','Vừa',''],['thua','Thưa','']]},
+  lm_giao:{l:'Hai đầu mày', h:'', o:[
+    ['khong','Tách rời',''],['co','Giao nhau','Xung đột lập trường, gây mâu thuẫn.']]},
+  lm_kc:{l:'Khoảng cách mày – mắt', h:'', o:[
+    ['xa','Xa mắt','Giữ vững lập trường, dễ bảo thủ.'],['vua','Vừa',''],['gan','Gần mắt (đè mắt)','Xung đột lập trường, độ minh mẫn có vấn đề, bạo lực ngầm.']]},
+  lm_huong:{l:'Hướng mày', h:'', o:[
+    ['len','Đi lên','Bảo vệ lập trường trực diện.'],['ngang','Ngang','Bảo vệ lập trường khéo léo.'],['ru','Rủ xuống','Không có nhu cầu bảo vệ lập trường.']]},
+  lm_micot:{l:'Mi cốt (xương chân mày)', h:'', o:[
+    ['binh','Bình thường',''],['cao','Cao, nhô','Bảo thủ, xung đột nội tâm, dễ trầm uất.']]},
+
+  mat_size:{l:'Kích thước mắt', h:'Mắt thuộc Hỏa — nhân sinh quan, trí huệ, cảm xúc, nội tâm.', o:[
+    ['to','To','Nhìn phóng đại, mơ mộng, cảm xúc mạnh, nghĩ về điều lớn lao.'],['vua','Vừa',''],['nho','Nhỏ','Chú ý chi tiết, cẩn trọng, tỉ mỉ.']]},
+  mat_sau:{l:'Độ sâu', h:'', o:[
+    ['loi','Lồi','Bộc lộ cảm xúc, hấp tấp, vội vàng.'],['binh','Bình thường',''],['sau','Sâu','Giấu kín cảm xúc, đánh giá khách quan, nhìn thấu bản chất.']]},
+  mat_tinh:{l:'Độ tĩnh', h:'', o:[
+    ['tinh','Tĩnh, ánh nhìn vững','Tâm tĩnh, hợp việc cần tập trung, gánh vác việc lớn.'],['dong','Không tĩnh, đảo, láo liên','Tâm hay xao động.']]},
+  mat_minh:{l:'Độ minh', h:'', o:[
+    ['minh','Đen trắng phân minh, sáng','Thông minh, hiểu biết, từng trải.'],['thuong','Bình thường',''],['lodo','Lờ đờ, mờ đục','Nhìn nhận mù mờ, thiếu sáng suốt.']]},
+  mat_sac:{l:'Sắc thái ánh mắt', h:'Có thể chọn nhiều.', m:1, o:[
+    ['sac','Sắc','Rõ ràng, logic, nhắm một mục tiêu cụ thể.'],
+    ['buon','Buồn','Nhìn hướng tiêu cực, dễ truân chuyên tình cảm.'],
+    ['uot','Ướt, nhiều nước','Nhìn vào trạng thái cảm xúc, dễ thương cảm, đa tình.'],
+    ['lanh','Lạnh','Nét xung đột với chữ Nhân của Mộc.'],
+    ['tro','Trố','Nhiều dục vọng, cần được thỏa mãn.']]},
+  mat_than:{l:'Thần mắt', h:'', o:[
+    ['tinhnhue','Tinh nhuệ, có lực',''],['thuong','Bình thường',''],['toi','Tối, thiếu thần','Nét xung đột với Kim, Thổ.']]},
+  mat_bong:{l:'Bọng mắt', h:'', o:[
+    ['khong','Bình thường',''],['tham','Thâm, đen','Thần khí hao — dấu hiệu dễ mất bản tâm.']]},
+  mat_mi:{l:'Lông mi', h:'', o:[
+    ['thuong','Bình thường',''],['dai','Dài','Đi cùng mắt nhiều nước là nét xung đột với Kim, Thổ.']]},
+  mat_db:{l:'Đặc điểm đặc biệt', h:'Có thể chọn nhiều.', m:1, o:[
+    ['amduong','Âm dương nhãn: 1 to 1 bé, mờ đục mà có lực','Hợp với nghề pháp sư.'],
+    ['hip','Mắt híp (thụy châu nhãn) — trẻ dưới 12 tuổi','Đi cùng đen trắng phân minh: cực kỳ thông minh.']]},
+
+  mui_cao:{l:'Sống mũi', h:'Mũi thuộc Thổ — sinh mệnh lực, cái tôi trong hành động, nhu cầu hiện diện.', o:[
+    ['cao','Cao, gồ','Cái tôi cao, nhu cầu thành tựu.'],['vua','Vừa',''],['thap','Thấp, tẹt','Cái tôi thấp.']]},
+  mui_xuong:{l:'Cốt mũi', h:'', o:[
+    ['lo','Thẳng xương, lộ xương','Cứng, rõ — gia tăng cho Kim, Thổ; xung đột với Mộc, Hỏa.'],
+    ['vung','Xương vững, không lộ','Vững mà không thái quá — nét bù khuyết cho mọi tướng.'],
+    ['thit','Đầy thịt','Mềm, đầy — gia tăng cho Mộc, Hỏa.']]},
+  mui_dau:{l:'Đầu mũi', h:'', o:[
+    ['binh','Bình thường',''],['hech','Hếch','Gia tăng cho Hỏa.']]},
+  mui_canh:{l:'Cánh mũi', h:'', o:[
+    ['to','To, bè, dày thịt','Nhu cầu hiện diện cao (diễn viên, diễn giả).'],['vua','Vừa',''],['hep','Hẹp','Nhu cầu hiện diện thấp.']]},
+  mui_lo:{l:'Lỗ mũi', h:'', o:[
+    ['to','To, lộ (hếch)','Dễ chi tiêu hoang phí, hao tài, che giấu cảm xúc kém.'],['vua','Vừa, kín','']]},
+  mui_soncan:{l:'Sơn căn (gốc mũi)', h:'Sức khỏe thể lý.', o:[
+    ['cao','Cao, đầy','Sinh lực cao — phúc về thân.'],['vua','Vừa',''],['thap','Thấp, gãy lõm','Sinh lực yếu.']]},
+  mui_db:{l:'Dấu hiệu khác ở mũi', h:'Có thể chọn nhiều.', m:1, o:[
+    ['gay','Mũi gãy','Niềm tin, cái tôi bị sụp đổ (nữ: liên quan chồng; nam: công việc, sự nghiệp).'],
+    ['vetngang','Vết ngang ở sơn căn','Dễ mắc tật.'],
+    ['lech','Mũi / sơn căn lệch',''],
+    ['thongthien','Mũi thông thiên (lỗ mũi lộ hướng lên)','Nhiều dục vọng — nhóm Thỏa mãn (tướng Kim).']]},
+  gm:{l:'Gò má', h:'Gò má thuộc Thổ — tính cạnh tranh, khả năng lãnh đạo. Mũi là quân, gò má là thần.', o:[
+    ['lo','Cao, cứng, lộ xương','Cạnh tranh mạnh — gia tăng Kim, Thổ; xung đột Mộc, Hỏa.'],
+    ['vung','Vững, không lộ xương','Cạnh tranh có chừng mực — bù khuyết.'],
+    ['thit','Nhiều thịt, căng bóng','Đưa nhiều cảm xúc, dục vọng vào hành động.'],
+    ['nhon','Nhọn, dô ra ngoài','Nét xung đột với Mộc.'],
+    ['thap','Thấp, phẳng','Tính cạnh tranh thấp.']]},
+  bau_ma:{l:'Bầu má', h:'', o:[
+    ['thit','Có thịt, bầu bĩnh','Đưa cảm xúc vào mối quan hệ, công việc.'],['thuong','Bình thường / gọn','']]},
+
+  mieng_rong:{l:'Độ rộng miệng', h:'Miệng thuộc Kim — cơ quan giao tế, quan hệ sơ giao và thâm giao.', o:[
+    ['rong','Rộng','Gia tăng Hỏa; quá rộng là xung đột với Kim.'],['vua','Vừa',''],['nho','Nhỏ','']]},
+  mieng_net:{l:'Nét miệng khi nghỉ', h:'', o:[
+    ['tuoi','Tươi','Giao tiếp tốt, chia sẻ tốt.'],['thuong','Bình thường',''],['buon','Xấu, buồn, trễ','Bộc lộ cảm xúc tiêu cực.']]},
+  mieng_cuoi:{l:'Khi cười', h:'', o:[
+    ['holoi','Hở lợi','Khó giữ bí mật.'],['thuong','Bình thường',''],['kin','Kín răng','Quản trị nguồn lực mạnh, dễ keo kiệt.']]},
+  moi_tren:{l:'Môi trên', h:'', o:[
+    ['day','Dày, tươi','Thật thà, đôn hậu, chân thành trong quan hệ sơ giao.'],['vua','Vừa',''],['mong','Mỏng','Không thật lòng trong quan hệ sơ giao, khen chê không thật.']]},
+  moi_duoi:{l:'Môi dưới', h:'', o:[
+    ['to','To, mọng','Nữ: sinh nở dễ, tử cung tốt.'],['vua','Vừa',''],['mong','Mỏng','']]},
+  moi_mau:{l:'Màu môi', h:'', o:[
+    ['hong','Đỏ, hồng','Dễ có quan hệ tốt, giao tiếp tốt.'],['thuong','Bình thường',''],['xam','Xám, nhợt','Dấu hiệu lạnh nhạt (phản Mộc).']]},
+  rang_tren:{l:'Răng trên', h:'Thâm giao huyết thống: nguồn lực, xuất phát điểm, giáo dục gia đình.', o:[
+    ['deu','Đều, khít',''],['thua','Thưa, lệch, khấp khểnh','']]},
+  rang_duoi:{l:'Răng dưới', h:'Thâm giao không huyết thống: hôn nhân.', o:[
+    ['deu','Đều, khít',''],['thua','Thưa, lệch, khấp khểnh','']]},
+  phap_lenh:{l:'Pháp lệnh (rãnh mũi – mép)', h:'', o:[
+    ['vuot','Rõ, dài vượt mép miệng','Lời nói có quyền lực, khả năng lãnh đạo.'],
+    ['mo','Mờ / chưa rõ',''],
+    ['nhap','Nhập khẩu (chạy vào khóe miệng)','Lời nói dễ gây tai họa.']]},
+  nhan_trung:{l:'Nhân trung', h:'', o:[
+    ['sau','Sâu, dài, rõ',''],['nong','Nông, ngắn','Thiếu sự yêu thương từ gia đình.']]},
+  mieng_db:{l:'Dấu hiệu khác', h:'Có thể chọn nhiều.', m:1, o:[
+    ['lech','Miệng lệch','Lời nói hư tình giả ý, dễ gây tai họa.'],['ho','Miệng hay hở','']]},
+
+  tai_size:{l:'Kích thước tai', h:'Tai thuộc Thủy — hạnh phúc tinh thần, cảm thụ tinh thần.', o:[
+    ['to','To','Cảm nhận đa dạng.'],['vua','Vừa',''],['nho','Nhỏ','Cảm nhận ít đa dạng.']]},
+  tai_day:{l:'Độ dày tai', h:'', o:[
+    ['day','Dày','Cảm nhận cảm xúc sâu sắc.'],['vua','Vừa',''],['mong','Mỏng','Cảm nhận nông, tinh thần mỏng manh.']]},
+  tai_dai:{l:'Dái tai', h:'', o:[
+    ['to','To, dày','Hài lòng với hiện tại, tích cực (mặt trái: thiếu động lực, chí tiến thủ).'],['vua','Vừa',''],['nho','Nhỏ','Khó hài lòng.']]},
+  tai_hinh:{l:'Dáng tai', h:'', o:[
+    ['vanh','Vểnh (nghinh phong nhĩ)','Thích phiêu lưu, mạo hiểm.'],['lon','Tai lộn (vành trong lộ ra)','Kiên định, hợp nhóm chinh phục.'],['sat','Áp sát, cân đối','']]},
+  tai_xuong:{l:'Sụn tai', h:'', o:[
+    ['khong','Mềm, không lộ',''],['lo','Lộ xương, cứng','Gia tăng Kim; xung đột với Mộc.']]},
+
+  cam_hinh:{l:'Dáng cằm', h:'Cằm thuộc Thổ — theo đuổi mục tiêu, mức độ kiên trì, quyết liệt.', o:[
+    ['banh','Bạnh','Kiên trì, ổn định.'],['nho','Nhô ra, đẩy','Quyết liệt, mạnh mẽ.'],['nhon','Nhọn, dô','Nét xung đột với Mộc.'],['che','Cằm chẻ','Rõ ràng trong quan hệ lợi ích.'],['vua','Tròn, vừa phải','']]},
+  cam_xuong:{l:'Cốt cằm – quai hàm', h:'', o:[
+    ['lo','Lộ xương, góc cạnh',''],['vung','Xương vững, không lộ','Nét bù khuyết.'],['thit','Nhiều thịt, mềm','']]},
+
+  than_chu:{l:'Thần chủ đạo', h:'Thần là cách biểu lộ cảm xúc khi tương tác với môi trường — không dùng để luận tính cách.', o:[
+    ['hoa','Thần Hòa — ân cần, chăm sóc','Thần thuộc Mộc.'],
+    ['lo','Thần Lộ — vui buồn hiện rõ ra ngoài','Thần thuộc Hỏa.'],
+    ['tang','Thần Tàng — ẩn giấu, không lộ hỷ nộ','Thần thuộc Thổ.'],
+    ['tinhk','Thần Tĩnh — biểu lộ có mục đích, tập trung','Thần thuộc Kim.'],
+    ['tinht','Thần Tinh — tò mò, tinh tế, luôn có giải pháp','Thần thuộc Thủy.']]},
+  than_thai:{l:'Thần thái chung', h:'', o:[
+    ['tuoi','Tươi, sáng',''],['binh','Bình thường',''],['u','U buồn, khó tính','Xung đột với Hỏa.'],['lanh','Lạnh nhạt','Dấu hiệu phản Mộc.'],['lodo','Lờ đờ, vô hồn','Dấu hiệu mất bản tâm.']]},
+  giong:{l:'Thanh tướng (giọng nói)', h:'', o:[
+    ['trungkhi','Nói từ trong bụng, đầy trung khí','Dấu hiệu phúc hậu thiên.'],['thuong','Bình thường',''],['mong','Mỏng, hụt hơi','']]}
+};
+
+const STEPS = [
+  {id:'info', t:'Người được xem', s:'Giới tính quyết định cách luận Lục thân (Thê tài – vợ, Quan – chồng).', f:[]},
+  {id:'hinh', t:'Hình tướng tổng quát', s:'Nhìn tổng thể — gốc để định Diện tướng.', f:['mat_dang','cot','hanh_xu','toc','co','dinh_dau']},
+  {id:'tamdinh', t:'Tam đình', s:'Ba vùng: Trí lực – Hoạt lực – Kết nối xã hội.', f:['td_thuong','td_trung','td_ha','cam_dot']},
+  {id:'tran', t:'Trán · Ấn đường', s:'Thuộc Thổ. Phúc về trí: 3 phần ở trán.', el:'tho', f:['tran_hinh','tran_cao','tran_rong','tran_phang','tran_toc','an_duong']},
+  {id:'longmay', t:'Lông mày', s:'Thuộc Mộc. Nằm trên mắt, bảo vệ mắt — bảo vệ quan điểm.', el:'moc', f:['lm_dam','lm_matdo','lm_giao','lm_kc','lm_huong','lm_micot']},
+  {id:'mat', t:'Mắt', s:'Thuộc Hỏa. Phúc về trí: 7 phần ở mắt (tĩnh – minh – sâu).', el:'hoa', f:['mat_size','mat_sau','mat_tinh','mat_minh','mat_sac','mat_than','mat_bong','mat_mi','mat_db']},
+  {id:'mui', t:'Mũi · Gò má', s:'Thuộc Thổ. Mũi – gò má là Quân – Thần: nhu cầu – hành động.', el:'tho', f:['mui_cao','mui_xuong','mui_dau','mui_canh','mui_lo','mui_soncan','mui_db','gm','bau_ma']},
+  {id:'mieng', t:'Miệng · Răng · Pháp lệnh', s:'Thuộc Kim. Cơ quan giao tế.', el:'kim', f:['mieng_rong','mieng_net','mieng_cuoi','moi_tren','moi_duoi','moi_mau','rang_tren','rang_duoi','phap_lenh','nhan_trung','mieng_db']},
+  {id:'tai', t:'Tai', s:'Thuộc Thủy. Phúc về tâm.', el:'thuy', f:['tai_size','tai_day','tai_dai','tai_hinh','tai_xuong']},
+  {id:'cam', t:'Cằm · Quai hàm', s:'Thuộc Thổ. Theo đuổi mục tiêu.', el:'tho', f:['cam_hinh','cam_xuong']},
+  {id:'than', t:'Thần · Thanh', s:'Ngũ thần và mối quan hệ Hình – Thần.', f:['than_chu','than_thai','giong']}
+];
+
+/* ---------- Tứ (Ngũ) diện tướng ---------- */
+const TUONG = {
+  kim:{duc:'Nghĩa', core:'Nguyên tắc, cứng rắn, kiên định lập trường',
+    tag:'Lấy Nghĩa làm gốc — đã nhận là gánh, đã định là theo',
+    tc:'Có nguyên tắc cao, lập trường vững vàng; thích sự rõ ràng, logic, thường theo đuổi một mục tiêu cụ thể.',
+    manh:['Kiên định, đáng tin cậy, hợp công việc cần kỷ luật','Trách nhiệm cao, quản trị đầu cuối hiệu quả'],
+    yeu:['Dễ bảo thủ, thiếu linh hoạt'],
+    phan:'Phản Kim: vô nguyên tắc, thần thái lờ đờ, bọng mắt thâm đen; dễ rơi vào bất ổn tâm lý, thậm chí sa vào nghiện ngập.',
+    mt:'Cần môi trường kỷ luật để phát huy điểm mạnh.', khoGoc:'Cứng quá thì gãy: chữ Nghĩa giữ người ta đứng thẳng, nhưng cũng khiến người ta khó cúi xuống để nhìn một lối khác.'},
+  moc:{duc:'Nhân', core:'Hòa đồng, yêu thương, dễ bị môi trường lôi kéo',
+    tag:'Lấy Nhân làm gốc — mềm như cây, theo gió mà vẫn hướng về ánh sáng',
+    tc:'Ôn hòa, dễ gần, có lòng trắc ẩn; dễ hài lòng, dễ bị ảnh hưởng bởi môi trường.',
+    manh:['Dễ kết nối, tạo thiện cảm','Có khả năng chăm sóc, quan tâm — hợp công việc cần sự yêu thương'],
+    yeu:['Thiếu kiên định, dễ bị lôi kéo trong hành động (dù tư tưởng có thể độc lập nếu trán cao)'],
+    phan:'Phản Mộc: lạnh nhạt, thiếu tình cảm, môi xám nhợt, thần tàng hoặc thần tĩnh; dễ rơi vào hành vi lệch chuẩn.',
+    mt:'Cần môi trường lành mạnh, tích cực để tránh bị lôi kéo tiêu cực.', khoGoc:'Cây mềm thì sống lâu, nhưng gió nào cũng làm nghiêng: lòng Nhân rộng mở khiến người ta dễ thương, mà cũng dễ bị kéo đi.'},
+  hoa:{duc:'Lễ', core:'Kết nối, giỏi giao tiếp, có sức ảnh hưởng, muốn được chú ý',
+    tag:'Lấy Lễ làm gốc — lửa phải tỏa ra mới là lửa',
+    tc:'Nhiệt tình, mạnh mẽ bên ngoài, thích lan tỏa năng lượng; có nhu cầu được thừa nhận, thích là trung tâm chú ý.',
+    manh:['Giao tiếp tốt, có sức ảnh hưởng, dễ kết nối','Có thể đồng cam cộng khổ, phục vụ nhóm khách khó tính'],
+    yeu:['Bên trong dễ bất an, lo lắng, cảm xúc thất thường','Cái tôi cao, khó phục vụ người khó tính'],
+    phan:'Phản Hỏa: thần tĩnh hoặc thần tinh, miệng kín, mắt hẹp — tích cực hơn so với các phản tướng khác.',
+    mt:'Cần môi trường năng động, nơi được kết nối và lan tỏa ảnh hưởng.', khoGoc:'Lửa sáng ra ngoài thì trong lòng thường trống: càng rực rỡ trước đám đông, càng dễ bất an khi một mình.'},
+  tho:{duc:'Tín', core:'Trung tín, vững chãi, trầm ổn',
+    tag:'Lấy Tín làm gốc — đất không nói, nhưng giữ được mọi thứ đặt lên nó',
+    tc:'Theo đuổi một niềm tin, lý tưởng, có sự kiên định; ổn định, đáng tin cậy.',
+    manh:['Trung tín, đáng tin cậy, hợp công việc cần sự ổn định','Có khả năng lãnh đạo, kiên trì đạt mục tiêu'],
+    yeu:['Khi niềm tin bị phá vỡ, dễ sụp đổ hoàn toàn, dẫn đến trạng thái tâm lý nghiêm trọng'],
+    phan:'Phản Thổ: thần tinh hoặc thần hòa, tai mỏng, ánh mắt vô hồn; thường gặp ở người khủng hoảng tinh thần, không được gia đình thừa nhận.',
+    mt:'Cần môi trường ổn định, đáng tin cậy để duy trì niềm tin.', khoGoc:'Đất vững vì đặt trọn lòng tin vào một điều: khi điều ấy sụp, cả mặt đất cũng sụp theo.'},
+  thuy:{duc:'Biến', core:'Biến hóa, kết hợp khí chất của nhiều tướng',
+    tag:'Nước không có hình — vào bình nào mang hình bình ấy',
+    tc:'Thủy tướng ít gặp, khó quan sát, có sự biến đổi; là sự kết hợp của các nhóm tướng khác, nên tính cách phải luận qua các tướng thành phần.',
+    manh:['Mang được ưu điểm của nhiều tướng cùng lúc'],yeu:['Khó nhất tâm — dễ phân tán giữa nhiều khí chất'],
+    phan:'', mt:'Cần nhận ra tướng thành phần nào là gốc để chọn môi trường cho đúng.', khoGoc:'Nước theo bình mà đổi hình: linh hoạt là tài, nhưng không biết mình là bình nào thì dễ lạc.'}
+};
+
+/* Gia tăng – Xung đột – Bù khuyết (gộp slide + tài liệu) */
+const GXB = {
+ kim:{
+  gt:[
+   ['Mắt nhỏ, sắc', d=>is(d,'mat_size','nho')||has(d,'mat_sac','sac'), 'Ánh nhìn thu vào chi tiết, cẩn trọng, nhắm thẳng mục tiêu — chữ Nghĩa thêm rõ ràng, logic.'],
+   ['Lông mày đậm', d=>is(d,'lm_dam','dam'), 'Lập trường kiên định — nguyên tắc có người canh giữ.'],
+   ['Mũi, gò má cao lộ xương', d=>is(d,'mui_xuong','lo')||is(d,'gm','lo'), 'Cái tôi hành động và tính cạnh tranh đều cứng, sắc.'],
+   ['Tai lộ xương', d=>is(d,'tai_xuong','lo'), 'Tinh thần cứng cỏi, khó lay.'],
+   ['Thần tĩnh', d=>is(d,'than_chu','tinhk'), 'Hình Kim – thần Kim: biểu lộ có mục đích, tập trung cao.']],
+  xd:[
+   ['Mắt không tĩnh, nhiều nước, lông mi dài', d=>is(d,'mat_tinh','dong')||has(d,'mat_sac','uot')||is(d,'mat_mi','dai'), 'Cảm xúc chảy tràn vào nơi lẽ ra chỉ có lý trí.',
+     'Đầu muốn giữ nguyên tắc, lòng lại cứ dao động — quyết rồi lại lung lay, giữ rồi lại tiếc.', 'Ra quyết định khi tâm đã lắng; viết nguyên tắc thành điều rõ ràng để có chỗ tựa lúc cảm xúc dâng.'],
+   ['Thần mắt tối, bọng mắt thâm', d=>is(d,'mat_than','toi')||is(d,'mat_bong','tham'), 'Thần khí hao — dấu hiệu chữ Nghĩa đang mất gốc.',
+     'Kim mà thiếu thần thì nguyên tắc chỉ còn là vỏ: dễ mỏi mệt, dễ buông, dễ rơi vào bất ổn.', 'Phục hồi thần khí trước mọi việc: ngủ đủ, sống điều độ, rời xa môi trường làm mình mất bản tâm.'],
+   ['Miệng quá rộng, cười hở lợi', d=>is(d,'mieng_rong','rong')||is(d,'mieng_cuoi','holoi'), 'Miệng (Kim) mà mở quá — lời ra nhiều hơn nguyên tắc cho phép.',
+     'Người trọng chữ Nghĩa mà khó giữ bí mật: lời nói vô tình làm tổn uy tín mà mình dày công giữ.', 'Nói ít hơn điều mình biết; việc chưa chắc, chưa nói.'],
+   ['Trán hẹp, bị tóc xâm phạm', d=>is(d,'tran_rong','hep')||is(d,'tran_toc','xam'), 'Trí lực bị thu hẹp, nguyên tắc dễ thành cố chấp.',
+     'Giữ nguyên tắc mà thiếu tầm nhìn — đúng trong từng việc nhỏ, sai ở hướng đi lớn.', 'Tìm người thầy, người cố vấn có tầm nhìn rộng; đọc và nghe nhiều trước khi khẳng định.']],
+  bk:[
+   ['Mắt to, có độ minh', d=>is(d,'mat_size','to')&&is(d,'mat_minh','minh'), 'Mở rộng tầm nhìn, làm mềm sự cứng nhắc bằng hiểu biết.'],
+   ['Miệng tươi', d=>is(d,'mieng_net','tuoi'), 'Giao tiếp tốt, chia sẻ tốt — nguyên tắc được nói ra dễ nghe.'],
+   ['Mũi hoặc cằm xương vững nhưng không lộ', d=>is(d,'mui_xuong','vung')||is(d,'cam_xuong','vung'), 'Cứng mà không thái quá — sức mạnh có chừng mực.'],
+   ['Tóc mềm, dày, khỏe', d=>is(d,'toc','khoe'), 'Mộc khí mềm mại nuôi lấy sự cứng của Kim.']]
+ },
+ moc:{
+  gt:[
+   ['Mũi thấp, đầy thịt', d=>is(d,'mui_cao','thap')||is(d,'mui_xuong','thit'), 'Cái tôi thấp, mềm — dễ hòa vào người khác.'],
+   ['Lông mày nhạt, thưa', d=>is(d,'lm_dam','nhat')||is(d,'lm_matdo','thua'), 'Lập trường linh hoạt — chữ Nhân không cần phòng thủ.'],
+   ['Tai dày', d=>is(d,'tai_day','day'), 'Cảm nhận cảm xúc sâu sắc — giàu lòng trắc ẩn.'],
+   ['Thần hòa', d=>is(d,'than_chu','hoa'), 'Hình Mộc – thần Mộc: ân cần, yêu thương, chăm sóc.']],
+  xd:[
+   ['Tai lộ xương', d=>is(d,'tai_xuong','lo'), 'Tinh thần cứng chen vào bản tính mềm.',
+     'Lòng muốn hòa mà cảm thụ lại cứng — thương người nhưng khó để người khác chạm vào mình.', 'Cho phép mình mềm với chính mình trước khi mềm với người.'],
+   ['Lông mày quá đậm', d=>is(d,'lm_dam','dam'), 'Lập trường cứng đặt trên một bản tính mềm.',
+     'Bản tính muốn chiều lòng người, nhưng lập trường lại không chịu lùi — giằng co giữa thương và giữ.', 'Phân biệt việc nào cần giữ lập trường, việc nào nên mềm; đừng dùng một thái độ cho mọi việc.'],
+   ['Mũi, gò má lộ xương', d=>is(d,'mui_xuong','lo')||is(d,'gm','lo'), 'Cái tôi hành động và cạnh tranh sắc nhọn — trái với chữ Nhân.',
+     'Muốn hòa mà lại muốn hơn: vừa thương người vừa muốn thắng người, nên hay tự dằn vặt.', 'Chọn sân chơi hợp tác hơn là đối đầu; cạnh tranh với chính mình thay vì với người thân cận.'],
+   ['Cằm, gò má nhọn, dô ra ngoài', d=>is(d,'cam_hinh','nhon')||is(d,'gm','nhon'), 'Góc nhọn trên một cây mềm.',
+     'Bên ngoài hòa nhã nhưng khi bị dồn thì phản ứng gắt — người ngoài bất ngờ, mình cũng hối.', 'Nhận ra ngưỡng chịu đựng của mình và lên tiếng sớm, đừng để dồn nén đến lúc bùng.'],
+   ['Mắt lạnh, môi trên mỏng', d=>has(d,'mat_sac','lanh'), 'Ánh nhìn lạnh trên một tướng Nhân — hơi ấm bị khép lại.',
+     'Lòng có thương mà không trao được; người ngoài thấy xa cách, mình thì thấy cô đơn.', 'Thực hành sự quan tâm bằng hành động nhỏ, cụ thể — để chữ Nhân có đường đi ra.']],
+  bk:[
+   ['Mắt nhỏ, thần mắt tinh nhuệ', d=>is(d,'mat_size','nho')&&(is(d,'mat_than','tinhnhue')||is(d,'mat_minh','minh')), 'Sự tinh nhuệ giúp người mềm không bị lôi kéo.'],
+   ['Mũi, gò má, cằm có xương cốt vững nhưng không lộ', d=>is(d,'mui_xuong','vung')||is(d,'gm','vung')||is(d,'cam_xuong','vung'), 'Có cốt vững bên trong — mềm mà không đổ.']]
+ },
+ hoa:{
+  gt:[
+   ['Mắt to, lồi', d=>is(d,'mat_size','to')||is(d,'mat_sau','loi'), 'Cởi mở, cảm xúc dễ kết nối.'],
+   ['Mũi hếch, đầy thịt', d=>is(d,'mui_dau','hech')||is(d,'mui_xuong','thit'), 'Nhu cầu hiện diện ấm, mềm, dễ gần.'],
+   ['Trán cao hoặc dô', d=>is(d,'tran_cao','cao')||is(d,'tran_hinh','do'), 'Cái tôi tư tưởng nổi bật — muốn được nhìn thấy.'],
+   ['Miệng rộng, cười hở lợi', d=>is(d,'mieng_rong','rong')||is(d,'mieng_cuoi','holoi'), 'Lời nói và nụ cười là ngọn lửa tỏa ra ngoài.'],
+   ['Thần lộ', d=>is(d,'than_chu','lo'), 'Hình Hỏa – thần Hỏa: vui buồn hiện rõ.']],
+  xd:[
+   ['Miệng xấu, buồn', d=>is(d,'mieng_net','buon'), 'Lửa cần tỏa qua lời, mà miệng lại mang nét buồn.',
+     'Nhu cầu kết nối cao mà công cụ kết nối lại yếu — muốn được yêu mến nhưng lời nói, nụ cười không chạm được người.', 'Luyện cách nói, cách cười; tìm kết nối qua việc làm thay vì chỉ qua lời.'],
+   ['Mắt buồn', d=>has(d,'mat_sac','buon'), 'Nhìn đời hướng tiêu cực dưới một vẻ ngoài nhiệt.',
+     'Ngoài sáng trong tối: trước người thì rực rỡ, về một mình thì bất an — lửa cháy mà không sưởi ấm được chính mình.', 'Đừng chỉ tìm sự thừa nhận bên ngoài; nuôi một nguồn vui không cần khán giả.'],
+   ['Thần thái không tươi (u buồn, khó tính)', d=>is(d,'than_thai','u'), 'Lửa bị khói che.',
+     'Muốn là trung tâm mà thần thái lại đẩy người ra xa — càng cần thừa nhận càng khó được thừa nhận.', 'Chăm sóc thần thái trước khi đòi hỏi sự chú ý; cười trước, người sẽ đến sau.'],
+   ['Mũi, cằm, gò má lộ xương', d=>is(d,'mui_xuong','lo')||is(d,'gm','lo')||is(d,'cam_xuong','lo'), 'Xương cứng trên một tướng cần mềm mại để kết nối.',
+     'Muốn gần người nhưng hành động lại cứng, sắc — cái tôi va chạm làm hỏng chính mối kết nối mình cần.', 'Hạ cái tôi trong hành động; để người khác thắng ở việc nhỏ.']],
+  bk:[
+   ['Mắt nhỏ, sâu', d=>is(d,'mat_size','nho')||is(d,'mat_sau','sau'), 'Thu bớt lửa vào trong — biết giữ cảm xúc, nhìn thấu vấn đề.'],
+   ['Miệng cười kín', d=>is(d,'mieng_cuoi','kin'), 'Biết giữ lời, giữ nguồn lực — lửa có lò.'],
+   ['Mũi, cằm, gò má vững nhưng không lộ xương', d=>is(d,'mui_xuong','vung')||is(d,'gm','vung')||is(d,'cam_xuong','vung'), 'Có cốt vững để ngọn lửa không chao đảo.']]
+ },
+ tho:{
+  gt:[
+   ['Mắt nhỏ, sâu', d=>is(d,'mat_size','nho')||is(d,'mat_sau','sau'), 'Giấu kín, khách quan, nhìn thấu — chữ Tín thêm trầm.'],
+   ['Lông mày đậm', d=>is(d,'lm_dam','dam'), 'Lập trường kiên định giữ lấy niềm tin.'],
+   ['Mũi, gò má cao lộ xương', d=>is(d,'mui_xuong','lo')||is(d,'gm','lo'), 'Ý chí và khả năng lãnh đạo nổi rõ.'],
+   ['Thần tàng', d=>is(d,'than_chu','tang'), 'Hình Thổ – thần Thổ: không lộ hỷ nộ.']],
+  xd:[
+   ['Lông mày đậm, giao nhau', d=>is(d,'lm_giao','co'), 'Xung đột lập trường, gây mâu thuẫn.',
+     'Người giữ chữ Tín mà lập trường tự giằng co — tin một điều nhưng lại muốn bảo vệ cả điều ngược lại, dễ va chạm với người cùng thuyền.', 'Chọn một niềm tin cốt lõi và nhất tâm với nó; tách lập trường khỏi cảm xúc khi tranh luận.'],
+   ['Lông mày thưa, rủ xuống', d=>is(d,'lm_matdo','thua')||is(d,'lm_huong','ru'), 'Lập trường buông lơi trên một tướng cần kiên định.',
+     'Bản tính cần niềm tin nhưng không có lực giữ niềm tin — dễ để người khác định hướng mình.', 'Viết ra điều mình tin; gắn mình với một tổ chức, một lý tưởng đáng tin để có chỗ dựa.'],
+   ['Mắt không tĩnh, nhiều nước, lông mi dài', d=>is(d,'mat_tinh','dong')||has(d,'mat_sac','uot')||is(d,'mat_mi','dai'), 'Cảm xúc dao động làm lung lay nền đất.',
+     'Muốn vững mà lòng không vững — giữ được việc nhưng không giữ được tâm.', 'Tĩnh tâm trước khi cam kết; đừng hứa trong lúc xúc động.'],
+   ['Thần mắt tối, bọng mắt thâm', d=>is(d,'mat_than','toi')||is(d,'mat_bong','tham'), 'Thần khí hao — niềm tin đang mỏi.',
+     'Thổ mà mất thần là đất khô: vẫn đứng đó nhưng không còn nuôi được gì.', 'Phục hồi năng lượng; tìm lại lý do mình đã tin ngay từ đầu.'],
+   ['Trán hẹp, bị tóc xâm phạm', d=>is(d,'tran_rong','hep')||is(d,'tran_toc','xam'), 'Niềm tin thiếu nền trí lực.',
+     'Tin sâu nhưng thấy hẹp — dễ đặt niềm tin sai chỗ rồi sụp đổ theo nó.', 'Kiểm chứng điều mình tin bằng hiểu biết; học rộng trước khi tin sâu.']],
+  bk:[
+   ['Mắt to, có độ minh, tĩnh', d=>is(d,'mat_size','to')&&(is(d,'mat_minh','minh')||is(d,'mat_tinh','tinh')), 'Tầm nhìn rộng và sáng giúp niềm tin không mù quáng.'],
+   ['Trán cao rộng', d=>is(d,'tran_cao','cao')||is(d,'tran_rong','rong'), 'Trí lực nâng đỡ niềm tin.'],
+   ['Mũi, gò má, cằm vững nhưng không lộ xương', d=>is(d,'mui_xuong','vung')||is(d,'gm','vung')||is(d,'cam_xuong','vung'), 'Vững mà không thái quá — đất có độ mềm để sinh dưỡng.']]
+ }
+};
+
+const THAN = {
+  hoa:{ten:'Hòa', h:'moc', y:'ân cần, yêu thương, quan tâm, chăm sóc'},
+  lo:{ten:'Lộ', h:'hoa', y:'bộc lộ cảm xúc ra ngoài, vui buồn rõ ràng'},
+  tang:{ten:'Tàng', h:'tho', y:'ẩn giấu cảm xúc, không lộ hỷ nộ'},
+  tinhk:{ten:'Tĩnh', h:'kim', y:'biểu lộ cảm xúc có mục đích, tập trung cao'},
+  tinht:{ten:'Tinh', h:'thuy', y:'tò mò, ham học hỏi, tinh tế, luôn có giải pháp'}
+};
+
+/* helpers */
+function is(d,k,v){return d[k]===v}
+function has(d,k,v){return Array.isArray(d[k])&&d[k].includes(v)}
+function any(d,k){return d[k]!==undefined&&d[k]!==null&&!(Array.isArray(d[k])&&!d[k].length)}
+function optMeaning(k,v){const f=F[k];if(!f)return'';const o=f.o.find(x=>x[0]===v);return o?o[2]:''}
+function optLabel(k,v){const f=F[k];if(!f)return v;const o=f.o.find(x=>x[0]===v);return o?o[1]:v}
+
+/* =================== BỘ MÁY PHÂN TÍCH =================== */
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const rnd=v=>Math.round(v);
+function band(s){ if(s==null) return 'na'; if(s>=72) return 'vuong'; if(s>=56) return 'kha'; if(s>=43) return 'tb'; return 'suy'; }
+const BANDTXT={vuong:'Vượng',kha:'Khá',tb:'Trung bình',suy:'Suy',na:'Chưa đủ dữ liệu'};
+const BANDCOL={vuong:'#3c8a4c',kha:'#7a9a35',tb:'#c48a12',suy:'#b8452f',na:'#a7957d'};
+
+/* ---- 1. Định diện tướng ---- */
+function inferTuong(d){
+  const s={kim:0,moc:0,hoa:0,tho:0};
+  const a=(h,v)=>{s[h]+=v};
+  if(d.mat_dang&&d.mat_dang!=='thuy') a(d.mat_dang,4);
+  if(is(d,'mat_size','nho')){a('kim',.7);a('tho',.5)}
+  if(has(d,'mat_sac','sac')) a('kim',1);
+  if(is(d,'lm_dam','dam')){a('kim',.7);a('tho',.7)}
+  if(is(d,'mui_xuong','lo')){a('kim',1);a('tho',.7)}
+  if(is(d,'gm','lo')){a('kim',.8);a('tho',1)}
+  if(is(d,'tai_xuong','lo')) a('kim',.8);
+  if(is(d,'tai_hinh','lon')){a('kim',.5);a('tho',.5)}
+  if(is(d,'cam_hinh','nho')){a('kim',.8);a('tho',.5)}
+  if(is(d,'cam_hinh','banh')) a('tho',1);
+  if(is(d,'cot','to')) a('tho',.7);
+  if(is(d,'mat_sau','sau')) a('tho',.8);
+  if(is(d,'mui_cao','thap')) a('moc',.8);
+  if(is(d,'mui_xuong','thit')){a('moc',.7);a('hoa',.5)}
+  if(is(d,'lm_dam','nhat')) a('moc',.8);
+  if(is(d,'lm_matdo','thua')) a('moc',.5);
+  if(is(d,'tai_day','day')) a('moc',.8);
+  if(is(d,'moi_tren','mong')) a('moc',.4);
+  if(has(d,'mat_sac','uot')) a('moc',.4);
+  if(is(d,'bau_ma','thit')) a('hoa',1);
+  if(is(d,'mieng_net','tuoi')) a('hoa',.8);
+  if(is(d,'mieng_rong','rong')) a('hoa',.7);
+  if(is(d,'mieng_cuoi','holoi')) a('hoa',.5);
+  if(is(d,'mat_size','to')) a('hoa',.7);
+  if(is(d,'mat_sau','loi')) a('hoa',.7);
+  if(is(d,'mui_dau','hech')) a('hoa',.8);
+  if(is(d,'tran_hinh','do')) a('hoa',.7);
+  if(is(d,'tai_hinh','vanh')) a('hoa',.7);
+  if(is(d,'mui_canh','to')) a('hoa',.5);
+  if(is(d,'gm','thit')) a('hoa',.6);
+  const rank=Object.keys(s).sort((x,y)=>s[y]-s[x]);
+  const top=s[rank[0]], sec=s[rank[1]];
+  let thuy=0;
+  if(d.mat_dang==='thuy') thuy=4+(top>0?sec/top*2:0);
+  else if(top>0) thuy=Math.max(0,(sec/top)*2.2-0.6);
+  const all={...s,thuy};
+  let main=rank[0];
+  if(d.mat_dang==='thuy' || (!d.mat_dang && top>0 && top-sec<0.6)) main='thuy';
+  const max=Math.max(...Object.values(all),0.01);
+  const pct={}; for(const k in all) pct[k]=rnd(all[k]/max*100);
+  return {main, rank, comps:[rank[0],rank[1]], second: main==='thuy'?rank[0]:rank[1], raw:all, pct, empty: top===0 && d.mat_dang!=='thuy'};
+}
+
+/* ---- 2. Chất lượng bộ vị (dùng cho Lục thân) ---- */
+function mk(){const o={raw:0,n:0,items:[]};o.add=(c,s,t,y)=>{if(c){o.raw+=s;o.items.push({s,t,y})}};return o}
+function finish(o,keys,d){
+  o.n=keys.filter(k=>any(d,k)).length;
+  o.score=o.n?clamp(rnd(52+o.raw*7.5),6,97):null;
+  o.good=o.items.filter(i=>i.s>0); o.bad=o.items.filter(i=>i.s<0); o.neu=o.items.filter(i=>i.s===0);
+  o.band=band(o.score); return o;
+}
+function qMat(d,ctx){
+  const o=mk();
+  o.add(is(d,'mat_tinh','tinh'),2,'Mắt tĩnh','tâm tĩnh, gánh vác được việc lớn');
+  o.add(is(d,'mat_tinh','dong'),-1.5,'Mắt không tĩnh','tâm hay xao động, khó tập trung lâu');
+  o.add(is(d,'mat_minh','minh'),2,'Đen trắng phân minh','thông minh, hiểu biết, từng trải');
+  o.add(is(d,'mat_minh','lodo'),-2,'Mắt lờ đờ, mờ đục','nhìn nhận mù mờ, thiếu sáng suốt');
+  o.add(is(d,'mat_sau','sau'),1,'Mắt sâu','giấu cảm xúc, nhìn thấu bản chất');
+  o.add(is(d,'mat_sau','loi'),-.5,'Mắt lồi','bộc lộ cảm xúc, hấp tấp, vội vàng');
+  o.add(is(d,'mat_size','to'),0,'Mắt to','nhìn phóng đại, mơ mộng, nghĩ chuyện lớn');
+  o.add(is(d,'mat_size','nho'),0,'Mắt nhỏ','chú ý chi tiết, cẩn trọng, tỉ mỉ');
+  o.add(is(d,'mat_than','tinhnhue'),1,'Thần mắt tinh nhuệ','ánh nhìn có lực');
+  o.add(is(d,'mat_than','toi'),-1.5,'Thần mắt tối','thần khí hao');
+  o.add(has(d,'mat_sac','sac'),.5,'Mắt sắc','rõ ràng, logic');
+  o.add(has(d,'mat_sac','buon'),-1.5,'Mắt buồn','nhìn hướng tiêu cực, dễ truân chuyên tình cảm');
+  o.add(has(d,'mat_sac','uot'),-.7,'Mắt ướt','dễ thương cảm, đa tình');
+  o.add(has(d,'mat_sac','lanh'),-1,'Mắt lạnh','khép hơi ấm');
+  o.add(has(d,'mat_sac','tro'),-.5,'Mắt trố','nhiều dục vọng');
+  o.add(is(d,'mat_bong','tham'),-1.2,'Bọng mắt thâm','thần khí hao, dễ mất bản tâm');
+  o.add(is(d,'mat_mi','dai')&&has(d,'mat_sac','uot'),-.3,'Lông mi dài, mắt nhiều nước','cảm xúc lấn lý trí');
+  o.add(has(d,'mat_db','hip')&&ctx.tuoi&&ctx.tuoi<12&&is(d,'mat_minh','minh'),1.5,'Thụy châu nhãn, đen trắng phân minh','cực kỳ thông minh');
+  o.add(has(d,'mat_db','amduong'),0,'Âm dương nhãn','hợp với nghề pháp sư');
+  return finish(o,['mat_size','mat_sau','mat_tinh','mat_minh','mat_sac','mat_than','mat_bong'],d);
+}
+function qTai(d){
+  const o=mk();
+  o.add(is(d,'tai_day','day'),1.5,'Tai dày','cảm nhận cảm xúc sâu sắc');
+  o.add(is(d,'tai_day','mong'),-1.5,'Tai mỏng','cảm thụ tinh thần mỏng manh');
+  o.add(is(d,'tai_size','to'),1,'Tai to','cảm nhận đa dạng');
+  o.add(is(d,'tai_size','nho'),-.5,'Tai nhỏ','cảm nhận ít đa dạng');
+  o.add(is(d,'tai_dai','to'),1.2,'Dái tai to','hài lòng với hiện tại, tích cực');
+  o.add(is(d,'tai_dai','nho'),-.7,'Dái tai nhỏ','khó hài lòng');
+  o.add(is(d,'tai_hinh','lon'),.5,'Tai lộn','kiên định, hợp nhóm chinh phục');
+  o.add(is(d,'tai_hinh','vanh'),0,'Tai vểnh','thích phiêu lưu, mạo hiểm');
+  o.add(is(d,'tai_xuong','lo'),-.3,'Tai lộ xương','tinh thần cứng');
+  return finish(o,['tai_size','tai_day','tai_dai','tai_hinh','tai_xuong'],d);
+}
+function qMieng(d,ctx){
+  const o=mk();
+  o.add(is(d,'moi_mau','hong'),1.5,'Môi đỏ hồng','dễ có quan hệ tốt, giao tiếp tốt');
+  o.add(is(d,'moi_mau','xam'),-1.5,'Môi xám nhợt','lạnh nhạt trong quan hệ');
+  o.add(is(d,'moi_tren','day'),1,'Môi trên dày, tươi','thật thà, đôn hậu');
+  o.add(is(d,'moi_tren','mong'),-1,'Môi trên mỏng','không thật lòng trong quan hệ sơ giao');
+  o.add(is(d,'mieng_net','tuoi'),1.5,'Miệng tươi','giao tiếp tốt, chia sẻ tốt');
+  o.add(is(d,'mieng_net','buon'),-1.5,'Miệng xấu, buồn','bộc lộ cảm xúc tiêu cực');
+  o.add(is(d,'rang_tren','deu'),1,'Răng trên đều khít','nguồn lực, nền tảng gia đình vững');
+  o.add(is(d,'rang_tren','thua'),-1,'Răng trên thưa lệch','nguồn lực huyết thống, xuất phát điểm khuyết');
+  o.add(is(d,'rang_duoi','deu'),1,'Răng dưới đều khít','thâm giao ngoài huyết thống (hôn nhân) gắn bó');
+  o.add(is(d,'rang_duoi','thua'),-1,'Răng dưới thưa lệch','thâm giao ngoài huyết thống (hôn nhân) dễ rạn');
+  o.add(is(d,'mieng_cuoi','kin'),.5,'Cười kín răng','quản trị nguồn lực mạnh (dễ keo kiệt)');
+  o.add(is(d,'mieng_cuoi','holoi'),-.5,'Cười hở lợi','khó giữ bí mật');
+  o.add(is(d,'phap_lenh','vuot'),ctx.tuoi&&ctx.tuoi>=40?.5:1.2,'Pháp lệnh vượt mép','lời nói có trọng lượng, uy tín');
+  o.add(is(d,'phap_lenh','nhap'),-2,'Pháp lệnh nhập khẩu','lời nói dễ gây tai họa');
+  o.add(has(d,'mieng_db','lech'),-2,'Miệng lệch','lời nói hư tình giả ý, dễ gây tai họa');
+  o.add(has(d,'mieng_db','ho'),-.7,'Miệng hay hở','khí lực dễ thoát');
+  o.add(ctx.gt==='nu'&&is(d,'moi_duoi','to'),.5,'Môi dưới to mọng','sinh nở dễ');
+  return finish(o,['mieng_rong','mieng_net','mieng_cuoi','moi_tren','moi_mau','rang_tren','rang_duoi','phap_lenh'],d);
+}
+function qTho(d){
+  const mui=mk(),tran=mk(),gm=mk(),cam=mk();
+  mui.add(is(d,'mui_soncan','cao'),1.5,'Sơn căn cao','sinh lực cao, phúc về thân');
+  mui.add(is(d,'mui_soncan','thap'),-1.2,'Sơn căn thấp','sinh lực yếu');
+  mui.add(is(d,'mui_xuong','vung'),1.5,'Mũi xương vững không lộ','cái tôi hành động vững mà không thái quá');
+  mui.add(is(d,'mui_xuong','lo'),.3,'Mũi thẳng, lộ xương','cứng, rõ, dễ thái quá');
+  mui.add(is(d,'mui_xuong','thit'),.3,'Mũi đầy thịt','mềm, đầy');
+  mui.add(is(d,'mui_cao','cao'),.5,'Mũi cao gồ','cái tôi cao, nhu cầu thành tựu');
+  mui.add(is(d,'mui_cao','thap'),-.4,'Mũi thấp tẹt','cái tôi thấp');
+  mui.add(is(d,'mui_lo','to'),-1,'Lỗ mũi to, lộ','hao tài, chi tiêu hoang phí');
+  mui.add(has(d,'mui_db','gay'),-2,'Mũi gãy','niềm tin, cái tôi bị sụp đổ');
+  mui.add(has(d,'mui_db','vetngang'),-1,'Vết ngang sơn căn','dễ mắc tật');
+  mui.add(has(d,'mui_db','lech'),-1.2,'Mũi lệch','');
+  mui.add(has(d,'mui_db','thongthien'),-.5,'Mũi thông thiên','nhiều dục vọng');
+  mui.add(is(d,'mui_canh','to'),0,'Cánh mũi to, bè','nhu cầu hiện diện cao');
+  mui.add(is(d,'mui_canh','hep'),0,'Cánh mũi hẹp','nhu cầu hiện diện thấp');
+  tran.add(is(d,'tran_cao','cao'),1,'Trán cao','óc suy tưởng');
+  tran.add(is(d,'tran_rong','rong'),1,'Trán rộng','óc thực tế, logic');
+  tran.add(is(d,'tran_rong','hep'),-1,'Trán hẹp','trí lực bị thu hẹp');
+  tran.add(is(d,'tran_phang','phang'),.7,'Trán phẳng, đầy','phúc trí');
+  tran.add(is(d,'tran_phang','khong'),-.3,'Trán lồi lõm','');
+  tran.add(is(d,'tran_toc','xam'),-1.2,'Tóc xâm phạm trán','trí lực bị che');
+  tran.add(is(d,'tran_hinh','bot'),-.3,'Trán bợt','dễ bị ảnh hưởng tư tưởng');
+  tran.add(is(d,'tran_hinh','do'),0,'Trán dô','cái tôi tư tưởng cao');
+  tran.add(is(d,'an_duong','sang'),.7,'Ấn đường sáng','tinh thần vững');
+  tran.add(is(d,'an_duong','toi'),-1,'Ấn đường tối','sức khỏe tinh thần hao tổn');
+  gm.add(is(d,'gm','vung'),1.2,'Gò má vững không lộ','cạnh tranh, lãnh đạo có chừng mực');
+  gm.add(is(d,'gm','lo'),.5,'Gò má cao lộ xương','cạnh tranh mạnh, cứng');
+  gm.add(is(d,'gm','thit'),-.3,'Gò má nhiều thịt căng bóng','cảm xúc, dục vọng lấn ý chí');
+  gm.add(is(d,'gm','nhon'),-.7,'Gò má nhọn dô','góc cạnh trong hành động');
+  gm.add(is(d,'gm','thap'),-.5,'Gò má thấp','tính cạnh tranh thấp');
+  cam.add(is(d,'cam_hinh','banh'),.8,'Cằm bạnh','kiên trì, ổn định');
+  cam.add(is(d,'cam_hinh','nho'),.8,'Cằm nhô','quyết liệt, mạnh mẽ');
+  cam.add(is(d,'cam_hinh','che'),.3,'Cằm chẻ','rõ ràng trong quan hệ lợi ích');
+  cam.add(is(d,'cam_hinh','nhon'),-.5,'Cằm nhọn dô','');
+  cam.add(is(d,'cam_xuong','vung'),1,'Cằm xương vững không lộ','theo đuổi mục tiêu bền bỉ');
+  cam.add(is(d,'cam_xuong','lo'),.3,'Cằm lộ xương','');
+  finish(mui,['mui_cao','mui_xuong','mui_soncan','mui_lo','mui_db'],d);
+  finish(tran,['tran_hinh','tran_cao','tran_rong','tran_phang','tran_toc','an_duong'],d);
+  finish(gm,['gm'],d); finish(cam,['cam_hinh','cam_xuong'],d);
+  const o=mk(); [mui,tran,gm,cam].forEach(p=>{o.raw+=p.raw;o.items.push(...p.items)});
+  o.raw*=0.75;
+  finish(o,['mui_cao','mui_xuong','mui_soncan','tran_cao','tran_rong','gm','cam_hinh','cam_xuong'],d);
+  o.parts={mui,tran,gm,cam}; return o;
+}
+function qMoc(d){
+  const o=mk(); const minh=is(d,'mat_minh','minh'), lodo=is(d,'mat_minh','lodo');
+  const dam=is(d,'lm_dam','dam'), thua=is(d,'lm_dam','nhat')||is(d,'lm_matdo','thua');
+  o.add(is(d,'toc','khoe'),1.5,'Tóc mềm, dày, khỏe','thái độ sống được nuôi dưỡng');
+  o.add(is(d,'toc','thua'),-1.2,'Tóc thưa, yếu','Mộc khí kém');
+  o.add(dam&&minh,1,'Mày đậm + mắt thông minh','nhìn nhận tốt, kiên định, có lý tưởng');
+  o.add(dam&&lodo,-.7,'Mày đậm + mắt lờ đờ','kiên định nhưng thiếu sáng suốt');
+  o.add(dam&&!minh&&!lodo,.4,'Lông mày đậm','lập trường kiên định');
+  o.add(thua&&minh,0,'Mày thưa + mắt thông minh','nhìn nhận tốt nhưng lập trường không kiên định');
+  o.add(thua&&lodo,-1.3,'Mày thưa + mắt lờ đờ','nhìn mù mờ, lập trường thay đổi liên tục');
+  o.add(is(d,'lm_giao','co'),-1.5,'Mày giao nhau','xung đột lập trường');
+  o.add(is(d,'lm_kc','gan'),-1.5,'Mày gần mắt','xung đột lập trường, bạo lực ngầm');
+  o.add(is(d,'lm_kc','xa'),.3,'Mày xa mắt','giữ vững lập trường (dễ bảo thủ)');
+  o.add(is(d,'lm_huong','ngang'),.4,'Mày ngang','bảo vệ lập trường khéo léo');
+  o.add(is(d,'lm_huong','len'),0,'Mày đi lên','bảo vệ lập trường trực diện');
+  o.add(is(d,'lm_huong','ru'),0,'Mày rủ','không có nhu cầu bảo vệ lập trường');
+  o.add(is(d,'lm_micot','cao'),-1,'Mi cốt cao','bảo thủ, xung đột nội tâm');
+  return finish(o,['toc','lm_dam','lm_matdo','lm_giao','lm_kc','lm_huong','lm_micot'],d);
+}
+
+/* ---- 3. Lục thân ---- */
+const LT_ORDER=['huynh','tai','quan','phu','tu'];
+function lucThan(T,gt,Qs){
+  const m={
+    huynh:{ten:'Huynh đệ',h:T,y:'anh em, bạn bè, quan hệ đồng trang lứa',why:'cùng hành với diện tướng'},
+    tai:{ten:'Thê tài',h:KHAC[T],y:gt==='nam'?'khả năng kiếm tiền · người vợ':'khả năng kiếm tiền, tài lộc',why:'hành bị diện tướng khắc'},
+    quan:{ten:'Quan',h:khacBoi(T),y:gt==='nu'?'công việc · người chồng':'công việc, sự nghiệp, các cản trở',why:'hành khắc diện tướng'},
+    phu:{ten:'Phụ mẫu',h:sinhRa(T),y:'cha mẹ, bề trên, quý nhân',why:'hành sinh cho diện tướng'},
+    tu:{ten:'Tử tôn',h:SINH[T],y:'con cái, cấp dưới, sức khỏe sinh sản',why:'hành do diện tướng sinh ra'}
+  };
+  for(const k in m){m[k].q=Qs[m[k].h]; m[k].score=m[k].q.score; m[k].band=m[k].q.band; m[k].bovi=BOVI[m[k].h].ten;}
+  return m;
+}
+
+/* ---- 4. Phúc ---- */
+function calcPhuc(d,ctx){
+  const f=(arr)=>{const a=arr.filter(x=>x[0]!==null);if(!a.length)return null;return a.reduce((s,x)=>s+x[0]*x[1],0)/a.reduce((s,x)=>s+x[1],0)};
+  const v=(k,good,bad)=>!any(d,k)?null:(is(d,k,good)?1:(bad&&is(d,k,bad)?0:0.5));
+  const than=f([[v('mui_soncan','cao','thap'),2],[v('mui_xuong','vung'),1],[any(d,'mui_db')?(d.mui_db.some(x=>['gay','vetngang','lech'].includes(x))?0:1):null,1]]);
+  const tam=f([[v('tai_day','day','mong'),2],[v('tai_size','to','nho'),1],[v('tai_dai','to','nho'),1]]);
+  const tranP=f([[v('tran_cao','cao'),1],[v('tran_phang','phang','khong'),1],[v('tran_rong','rong','hep'),1]]);
+  const matP=f([[v('mat_tinh','tinh','dong'),1],[v('mat_minh','minh','lodo'),1],[v('mat_sau','sau','loi'),1]]);
+  let tri=null; if(tranP!==null||matP!==null) tri=(tranP??0.5)*0.3+(matP??0.5)*0.7;
+  const p=x=>x===null?null:rnd(x*100);
+  const r={than:p(than),tam:p(tam),tri:p(tri),tranP:p(tranP),matP:p(matP)};
+  const vals=[r.than,r.tam,r.tri].filter(x=>x!==null);
+  r.avg=vals.length?rnd(vals.reduce((a,b)=>a+b,0)/vals.length):null;
+  r.loai = r.avg===null?'na': (r.avg>=66&&Math.min(...vals)>=50?'tienthien':(r.avg<40?'batuc':'trung'));
+  r.hauthien = is(d,'giong','trungkhi');
+  return r;
+}
+
+/* ---- 5. Hình – Thần ---- */
+function hinhThan(d,T){
+  const r={has:!!d.than_chu};
+  if(d.than_chu){
+    const th=THAN[d.than_chu]; r.than=th; r.tH=th.h;
+    if(th.h===T) r.rel='dong';
+    else if(SINH[T]===th.h) r.rel='hinhsinh';
+    else if(SINH[th.h]===T) r.rel='thansinh';
+    else r.rel='batphoi';
+  }
+  r.xung=(is(d,'cot','to')&&is(d,'hanh_xu','mem'))||(is(d,'cot','nho')&&is(d,'hanh_xu','manh'));
+  r.xungTxt=is(d,'cot','to')?'xương to mà hành xử mềm mại':'xương nhỏ mà hành xử mạnh mẽ';
+  const w=[]; if(is(d,'mui_soncan','thap'))w.push('sơn căn thấp'); if(has(d,'mui_db','lech'))w.push('mũi lệch'); if(has(d,'mieng_db','ho'))w.push('miệng hở'); if(is(d,'moi_tren','day')||is(d,'moi_duoi','to'))w.push('môi dày');
+  r.canh=(r.rel==='batphoi'||r.xung)&&w.length>=2?w:[];
+  return r;
+}
+
+/* ---- 6. Phản tướng & cảnh báo ---- */
+function phanTuong(d,T){
+  const sig=[];
+  if(T==='kim'){ if(is(d,'than_thai','lodo')||is(d,'mat_minh','lodo')) sig.push('thần thái lờ đờ'); if(is(d,'mat_bong','tham')) sig.push('bọng mắt thâm đen'); }
+  if(T==='moc'){ if(is(d,'than_thai','lanh')||has(d,'mat_sac','lanh')) sig.push('lạnh nhạt'); if(is(d,'moi_mau','xam')) sig.push('môi xám nhợt'); if(is(d,'than_chu','tang')||is(d,'than_chu','tinhk')) sig.push('thần '+THAN[d.than_chu].ten.toLowerCase()); }
+  if(T==='hoa'){ const a=is(d,'than_chu','tinhk')||is(d,'than_chu','tinht'), b=is(d,'mieng_cuoi','kin'), c=is(d,'mat_size','nho');
+    if(a&&b&&c) sig.push('thần '+THAN[d.than_chu].ten.toLowerCase(),'miệng kín','mắt hẹp'); }
+  if(T==='tho'){ if(is(d,'than_chu','tinht')||is(d,'than_chu','hoa')) sig.push('thần '+THAN[d.than_chu].ten.toLowerCase()); if(is(d,'tai_day','mong')) sig.push('tai mỏng'); if(is(d,'than_thai','lodo')||is(d,'mat_minh','lodo')) sig.push('ánh mắt vô hồn'); }
+  const need = T==='hoa'?3:2;
+  return {sig, level: sig.length>=need?'ro':(sig.length?'mam':'khong')};
+}
+
+function nhomTinhCach(d,T,comps,nghiLuc){
+  const out=[];
+  const kn=[is(d,'mieng_net','tuoi'),is(d,'bau_ma','thit'),is(d,'mui_canh','to'),is(d,'tai_size','to'),is(d,'tai_dai','to')].filter(Boolean).length;
+  if(kn>=3) out.push({k:'ketnoi',n:kn,of:5,t:'Nhóm Kết nối',y:'Nhu cầu kết nối cao, giỏi giao tiếp, lan tỏa ảnh hưởng; có thể đồng cam cộng khổ, phục vụ được nhóm khách khó tính. Điểm yếu: dễ bất an — phải kết nối mới xóa được sự bất an (như sao Tham Lang nhị hợp Thiên Đồng trong tử vi).'});
+  const cp=[is(d,'cam_hinh','nho')||is(d,'cam_hinh','banh'),is(d,'gm','lo'),is(d,'tai_hinh','lon'),is(d,'mui_xuong','lo')].filter(Boolean).length;
+  if(cp>=3) out.push({k:'chinhphuc',n:cp,of:4,t:'Nhóm Chinh phục (Thổ – Kim)',y:'Theo đuổi mục tiêu, chấp nhận khó khăn để đạt thành tựu; trách nhiệm cao, quản trị đầu cuối. Điểm yếu: dễ sụp đổ nếu niềm tin bị phá vỡ.'});
+  const ta=[is(d,'mui_cao','cao')||is(d,'mui_canh','to'),is(d,'tran_hinh','do'),is(d,'tai_hinh','vanh'),T==='hoa'||comps.includes('hoa')&&T==='thuy'].filter(Boolean).length;
+  if(ta>=3) out.push({k:'thuanhan',n:ta,of:4,t:'Nhóm Động lực thừa nhận',y:'Thích là trung tâm chú ý, có sức ảnh hưởng; đồng cam cộng khổ được, nhưng cái tôi cao nên khó phục vụ người khó tính.'});
+  let tm=null;
+  if((T==='kim')&&(has(d,'mui_db','thongthien')||has(d,'mat_sac','tro'))) tm='mũi thông thiên / mắt trố trên tướng Kim';
+  if((T==='hoa')&&is(d,'gm','thit')) tm='gò má nhiều thịt, căng bóng trên tướng Hỏa';
+  if((T==='moc')&&is(d,'moi_tren','mong')&&has(d,'mat_sac','uot')) tm='môi mỏng, mắt ướt trên tướng Mộc';
+  if(tm) out.push({k:'thoaman',t:'Nhóm Thỏa mãn, nhiều dục vọng',y:'Dấu hiệu: '+tm+'. Đời sống càng phát triển, nhóm này (đặc biệt là Hỏa) càng chiếm ưu thế — cần tự biết điểm dừng của ham muốn.'});
+  if(T==='hoa'&&nghiLuc!==null&&nghiLuc<46&&(is(d,'bau_ma','thit')||is(d,'gm','thit')||is(d,'td_ha','troi'))) out.push({k:'thudong',t:'Nhóm Thụ động trong công việc',y:'Vùng hưởng thụ phát triển mà vùng ý chí thấp: thỏa mãn ngắn hạn, vô hiệu hóa vùng lo âu; tư duy nhanh nhưng dễ rơi vào "bẫy trung bình".'});
+  return out;
+}
+
+function tuongTai(d,ht){
+  const c=[
+    ['Trán cao',is(d,'tran_cao','cao')],
+    ['Mắt đủ tĩnh – minh – sâu',is(d,'mat_tinh','tinh')&&is(d,'mat_minh','minh')&&is(d,'mat_sau','sau')],
+    ['Miệng có pháp lệnh',is(d,'phap_lenh','vuot')],
+    ['Hình thần không bất tương phối',ht.has?(ht.rel!=='batphoi'&&!ht.xung):!ht.xung],
+    ['Răng đều, khít',is(d,'rang_tren','deu')&&!is(d,'rang_duoi','thua')],
+    ['Cười không hở lợi',any(d,'mieng_cuoi')&&!is(d,'mieng_cuoi','holoi')],
+    ['Lỗ mũi không quá rộng',is(d,'mui_lo','vua')]
+  ];
+  return {c, n:c.filter(x=>x[1]).length};
+}
+
+function camCheck(d){
+  const a=(d.cam_dot||[]).filter(x=>x!=='khong');
+  const map={tran:'thuong',mat:'trung',mui:'trung',goma:'trung',mieng:'ha',cam:'ha'};
+  const dinh=[...new Set(a.map(x=>map[x]))];
+  return {parts:a,dinh};
+}
+
+/* ---- 7. Mâu thuẫn → Cái khổ → Hóa giải (barem 4 bước) ---- */
+function findConflicts(d,R){
+  const out=[]; const T=R.T, g=R.gt;
+  const P=(t,mau,kho,giai,w)=>out.push({t,mau,kho,giai,w:w||1});
+  /* (a) xung đột của tướng chính */
+  (R.gxbList||[]).forEach(G=>G.xd.filter(x=>x.y).forEach(x=>P('Tướng '+HANH[G.h]+' gặp "'+x.t+'"', x.mean, x.kho, x.giai, 2)));
+  /* (b) các tổ hợp */
+  const nhuCau = is(d,'mui_cao','cao')||is(d,'mui_canh','to');
+  if(nhuCau && (is(d,'mieng_net','buon')||is(d,'moi_mau','xam')) && !(T==='hoa'))
+    P('Nhu cầu được thừa nhận ↔ khả năng giao tiếp','Mũi '+(is(d,'mui_cao','cao')?'cao':'cánh to')+' cho thấy nhu cầu hiện diện, được ghi nhận lớn; nhưng miệng '+(is(d,'mieng_net','buon')?'buồn, kém tươi':'xám nhợt')+' khiến lời nói không chạm được người.','Dễ đau khổ vì làm nhiều mà không được thừa nhận, nói mà không ai nghe.','Không đổi được nhu cầu thì đổi cách đáp ứng: để kết quả lên tiếng thay lời nói; tập nói ít mà chắc.',1.5);
+  if(is(d,'mui_cao','cao')&&is(d,'mui_canh','hep'))
+    P('Cái tôi cao ↔ nhu cầu hiện diện thấp','Mũi cao: cái tôi và nhu cầu thành tựu lớn; cánh mũi hẹp: lại không muốn phô bày, hiện diện.','Cô độc trên con đường của mình — công sức nhiều mà thường bị khuất, khó tìm người đồng hành.','Chọn một vài người tri kỷ để chia sẻ; chấp nhận rằng thành tựu không cần đám đông chứng kiến.',1.2);
+  if(is(d,'mat_minh','minh')&&(has(d,'mat_sac','buon')||has(d,'mat_sac','uot')))
+    P('Trí sáng ↔ lòng nhạy','Mắt đen trắng phân minh là thông minh, từng trải; nhưng ánh mắt '+(has(d,'mat_sac','buon')?'buồn':'ướt')+' cho thấy cảm xúc nhạy, dễ tổn thương.'+(g==='nu'?' Phụ nữ mắt sáng mà buồn — tài liệu xếp vào tướng thông minh, nhạy cảm, dễ khổ vì tình cảm.':''),'Hiểu rất rõ mà vẫn không tránh được — khổ vì tình cảm dù lý trí đã thấy trước.','Đừng đòi hỏi lý trí thắng cảm xúc; hãy cho cảm xúc một lối ra lành mạnh (viết, nghệ thuật, người tri kỷ) trước khi nó thành nỗi đau.',1.5);
+  if(is(d,'lm_dam','dam')&&is(d,'mat_minh','lodo'))
+    P('Lập trường mạnh ↔ nhãn quan mờ','Lông mày đậm: kiên định; mắt lờ đờ: thiếu sáng suốt.','Kiên định đi sai đường — càng giữ càng xa.','Trước khi giữ một lập trường, hãy kiểm chứng nó bằng người sáng suốt bên cạnh.',1.3);
+  if((is(d,'lm_dam','nhat')||is(d,'lm_matdo','thua'))&&is(d,'mat_minh','minh')&&T!=='moc')
+    P('Thấy đúng ↔ không giữ được','Mắt thông minh nhìn ra vấn đề rất tốt; nhưng lông mày thưa/nhạt — lập trường không kiên định.','Biết điều đúng mà không bảo vệ được nó; về sau hay tiếc vì đã nhường.','Ghi lại nhận định của mình trước khi bàn với người khác; giữ ít điều, nhưng giữ đến cùng.',1);
+  if(is(d,'tran_hinh','bot')&&is(d,'lm_dam','dam'))
+    P('Tư tưởng dễ ảnh hưởng ↔ lập trường cứng','Trán bợt: dễ bị suy nghĩ người khác ảnh hưởng; lông mày đậm: bảo vệ lập trường kiên định.','Kiên quyết bảo vệ một quan điểm vốn mượn của người khác — đến khi tỉnh ra thì đã đi quá xa.','Hỏi lại mình: "Đây là ý của ta hay của người?" trước khi đứng ra bảo vệ.',1.2);
+  if(is(d,'tai_dai','nho')&&is(d,'cam_hinh','nho'))
+    P('Khó hài lòng ↔ quyết liệt','Dái tai nhỏ: khó hài lòng; cằm nhô: quyết liệt, mạnh mẽ.','Lao về phía trước không ngừng mà chẳng bao giờ thấy đủ — thành công cũng mệt, thất bại càng mệt.','Đặt điểm dừng cho từng mục tiêu và cho phép mình ăn mừng; mục tiêu là bậc thang của mục đích, không phải đích đến.',1.2);
+  if(is(d,'tai_dai','to')&&R.nghiLuc!==null&&R.nghiLuc<45)
+    P('Dễ hài lòng ↔ ý chí mỏng','Dái tai to: hài lòng với hiện tại; vùng nghị lực (mũi – cằm – trán – gò má) lại yếu.','Bình an nhưng dễ dừng sớm — thiếu động lực, chí tiến thủ; cơ hội trôi qua mà không tiếc.','Đặt mình trong một tập thể có nhịp làm việc rõ ràng; để môi trường kéo mình đi.',1);
+  const gmMain = is(d,'gm','lo')||is(d,'gm','vung'), gmWeak=is(d,'gm','thap')||is(d,'gm','thit');
+  if(is(d,'mui_cao','cao')&&gmWeak)
+    P('Quân mạnh ↔ thần yếu (mũi – gò má)','Mũi là quân (nhu cầu), gò má là thần (hành động). Mũi cao mà gò má '+(is(d,'gm','thap')?'thấp':'nhiều thịt')+' — nhu cầu lớn mà sức hành động không theo kịp.','Muốn nhiều, làm không tới — dễ bất mãn với chính mình.','Thu nhỏ mục tiêu cho vừa sức hành động; hoặc tìm "thần" bên ngoài — cộng sự giỏi thực thi.',1.3);
+  if(is(d,'mui_cao','thap')&&is(d,'gm','lo'))
+    P('Thần mạnh ↔ quân yếu (gò má – mũi)','Gò má cao lộ xương: hành động, cạnh tranh mạnh; mũi thấp: cái tôi, nhu cầu riêng thấp.','Làm rất nhiều nhưng hay làm cho người khác hưởng; dễ bị lợi dụng sức.','Xác định rõ mình muốn gì trước khi lao vào; học cách đòi phần xứng đáng.',1.2);
+  if(is(d,'mat_size','to')&&is(d,'co','dai'))
+    P('Nghĩ lớn ↔ ra tay chậm','Mắt to: nghĩ về điều lớn lao; cổ dài: tầm nhìn xa nhưng hành động chậm.','Thấy trước mà không kịp làm — cơ hội về tay người khác.','Nhận vai quân sư, người hoạch định; ghép mình với người hành động nhanh.',1);
+  if(is(d,'tai_hinh','vanh')&&(T==='tho'))
+    P('Thích phiêu lưu ↔ bản mệnh cần ổn định','Tai vểnh: thích mạo hiểm; tướng Thổ cần môi trường ổn định để giữ niềm tin.','Mỗi lần mạo hiểm là một lần lung lay nền móng.','Mạo hiểm trong khuôn khổ: chừa phần nền tảng không đụng tới.',1);
+  if(is(d,'tran_cao','cao')&&is(d,'cam_xuong','thit')&&!is(d,'cam_hinh','nho')&&!is(d,'cam_hinh','banh'))
+    P('Mục đích lớn ↔ sức theo đuổi mỏng','Trán cao: suy tưởng, mục đích lớn; cằm mềm, không bạnh không nhô: sức theo đuổi mục tiêu chưa bền.','Mục đích và mục tiêu không đồng nhất — ý tưởng nhiều mà dở dang.','Biến mục đích thành từng mục tiêu nhỏ, đo được; làm xong một việc rồi mới mở việc mới.',1);
+  if(is(d,'phap_lenh','nhap')||has(d,'mieng_db','lech'))
+    P('Lời nói ↔ tai họa','Pháp lệnh nhập khẩu / miệng lệch: lời nói dễ hư tình giả ý, dễ gây tai họa.','Thiệt vì miệng — một câu nói sai thời điểm có thể phá cả công sức dài.','Tu khẩu: nghĩ ba lần trước khi nói; việc quan trọng thì viết thay vì nói.',1.4);
+  if(is(d,'lm_kc','gan')||is(d,'lm_micot','cao'))
+    P('Xung đột nội tâm','Lông mày '+(is(d,'lm_kc','gan')?'gần mắt (xung đột lập trường, bạo lực ngầm)':'')+(is(d,'lm_kc','gan')&&is(d,'lm_micot','cao')?'; ':'')+(is(d,'lm_micot','cao')?'mi cốt cao (bảo thủ, xung đột nội tâm, dễ trầm uất)':'')+'.','Cuộc chiến bên trong nhiều hơn bên ngoài — dồn nén lâu dễ bùng hoặc trầm uất.','Tìm kênh xả an toàn (thể thao, thiền, người tin cậy); đừng giải quyết mâu thuẫn lúc đang nóng.',1.2);
+  if(R.ht.rel==='batphoi'||R.ht.xung)
+    P(R.ht.rel==='batphoi'?'Hình thần bất tương phối':'Hình thần xung nhau', R.ht.rel==='batphoi' ? ('Hình '+HANH[T]+' mà thần '+R.ht.than.ten+' ('+HANH[R.ht.tH]+') — hai hành tương khắc'+(R.ht.xung?'; lại thêm '+R.ht.xungTxt:'')+' — tâm xung mệnh.') : ('Khung hình và cách hành xử ngược nhau: '+R.ht.xungTxt+'.'),'Sống trái với khuôn mình được sinh ra: luôn có cảm giác "không đúng chỗ", gồng mình mà mệt.','Tâm đối nghịch mệnh thì khổ, nhưng chính cái khổ ấy rèn nên người xuất chúng. Nhìn thấy cái khổ để điều chỉnh, gỡ rối, chỉnh tâm.',1.6);
+  out.sort((a,b)=>b.w-a.w);
+  return out;
+}
+
+/* ---- 8. Tổng hợp ---- */
+function analyze(S){
+  const d=S.d, gt=S.info.gt, tuoi=+S.info.tuoi||null, ctx={gt,tuoi};
+  const inf=inferTuong(d);
+  const T=S.override||inf.main;
+  const comps = T==='thuy' ? inf.comps : [T];
+  const Q={hoa:qMat(d,ctx), thuy:qTai(d), kim:qMieng(d,ctx), tho:qTho(d), moc:qMoc(d)};
+  const R={d,gt,tuoi,ten:S.info.ten,inf,T,comps,Q};
+  R.second = T==='thuy'? null : (inf.rank.find(x=>x!==T));
+  R.secondPct = R.second? inf.pct[R.second]:0;
+  R.gxbList = comps.map(h=>({h,
+    gt:GXB[h].gt.map(x=>({t:x[0],y:!!x[1](d),mean:x[2]})),
+    xd:GXB[h].xd.map(x=>({t:x[0],y:!!x[1](d),mean:x[2],kho:x[3],giai:x[4]})),
+    bk:GXB[h].bk.map(x=>({t:x[0],y:!!x[1](d),mean:x[2]}))}));
+  R.gxbSum = R.gxbList.reduce((s,G)=>({gt:s.gt+G.gt.filter(x=>x.y).length,xd:s.xd+G.xd.filter(x=>x.y).length,bk:s.bk+G.bk.filter(x=>x.y).length,gtN:s.gtN+G.gt.length,xdN:s.xdN+G.xd.length,bkN:s.bkN+G.bk.length}),{gt:0,xd:0,bk:0,gtN:0,xdN:0,bkN:0});
+  R.lt=lucThan(T,gt,Q);
+  R.nghiLuc=Q.tho.score;
+  R.phuc=calcPhuc(d,ctx);
+  R.ht=hinhThan(d,T);
+  R.phan=T==='thuy'?{sig:[],level:'khong'}:phanTuong(d,T);
+  R.nhom=nhomTinhCach(d,T,comps,R.nghiLuc);
+  R.tai=tuongTai(d,R.ht);
+  R.cam=camCheck(d);
+  R.conf=findConflicts(d,R);
+  R.khoHopTac = gt==='nam' ? [is(d,'mui_cao','thap')&&'mũi quá tẹt', is(d,'lm_giao','co')&&'lông mày giao nhau mạnh', is(d,'cam_hinh','banh')&&is(d,'cam_xuong','lo')&&'cằm quá bạnh', is(d,'lm_matdo','ram')&&is(d,'lm_dam','dam')&&'lông mày quá rậm'].filter(Boolean) : [];
+  const isMoc = T==='moc'||comps.includes('moc');
+  R.vayMuon = isMoc && [is(d,'rang_tren','thua')||is(d,'rang_duoi','thua'), is(d,'mieng_cuoi','holoi'), is(d,'mat_size','to')].filter(Boolean).length>=2;
+  R.hoaDuc = (T==='hoa'||comps.includes('hoa'))&&is(d,'gm','thit');
+  R.filled = Object.keys(F).filter(k=>any(d,k)).length;
+  return R;
+}
+
+/* =================== LUẬN GIẢI (VĂN BẢN) =================== */
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const elTag=h=>`<span class="el" style="background:${HCOLOR[h]}">${HANH[h]}</span>`;
+const pill=(t,c)=>`<span class="pill ${c}">${t}</span>`;
+const bandPill=b=>`<span class="pill" style="background:${BANDCOL[b]}22;color:${BANDCOL[b]}">${BANDTXT[b]}</span>`;
+const joinVi=a=>a.length<=1?(a[0]||''):a.slice(0,-1).join(', ')+' và '+a[a.length-1];
+const lc=s=>s?s.charAt(0).toLowerCase()+s.slice(1):s;
+function xung(d){return d.gt==='nam'?'anh':'chị'}
+
+/* ---------- Ngũ quan ---------- */
+function luanTran(d,R){
+  const L=[];
+  if(d.tran_hinh) L.push(`<b>${optLabel('tran_hinh',d.tran_hinh)}</b> — ${lc(optMeaning('tran_hinh',d.tran_hinh))}`);
+  const cao=is(d,'tran_cao','cao'), rong=is(d,'tran_rong','rong');
+  if(cao&&rong) L.push('<b>Vừa cao vừa rộng</b> — óc suy tưởng (trừu tượng, sáng tạo) và óc thực tế (logic) cùng có mặt: nghĩ được điều lớn, mà cũng biết đặt nó xuống đất.');
+  else if(cao) L.push('<b>Trán cao</b> — trí lực thiên về trừu tượng, tưởng tượng, sáng tạo: giỏi nhìn ra ý niệm, hình mẫu, tương lai.');
+  else if(rong) L.push('<b>Trán rộng</b> — trí lực thiên về logic, thực tế: giỏi phân tích, hệ thống, tính toán.');
+  if(is(d,'tran_rong','hep')) L.push('<b>Trán hẹp</b> — tầm tư duy bị thu lại; dễ thấy đúng trong phạm vi nhỏ mà thiếu tầm nhìn lớn.');
+  if(is(d,'tran_phang','phang')) L.push('<b>Mặt trán phẳng, đầy</b> — trí lực được nâng đỡ, ít trở ngại trong học hỏi.');
+  if(is(d,'tran_toc','xam')) L.push('<b>Tóc xâm phạm trán</b> — nét xung đột với Kim, Thổ: trí lực bị che, dễ cố chấp.');
+  if(is(d,'an_duong','sang')) L.push('<b>Ấn đường sáng</b> — sức khỏe tinh thần tốt, đầu óc thông thoáng.');
+  if(is(d,'an_duong','toi')) L.push('<b>Ấn đường tối, hẹp</b> — sức khỏe tinh thần đang hao: dễ căng thẳng, lo nghĩ.');
+  if((R.T==='moc'||R.comps.includes('moc'))&&(cao||is(d,'tran_hinh','do'))) L.push('<i>Tướng Mộc mà trán '+(cao?'cao':'dô')+'</i>: độc lập tư tưởng — hành động có thể bị môi trường lôi kéo, nhưng suy nghĩ thì không dễ bị dắt.');
+  const p=R.phuc.tranP; if(p!==null) L.push(`Phúc trí phần trán (cao – phẳng – rộng): <b>${p}%</b>.`);
+  return L;
+}
+function luanMay(d,R){
+  const L=[]; const minh=is(d,'mat_minh','minh'), lodo=is(d,'mat_minh','lodo');
+  const dam=is(d,'lm_dam','dam'), thua=is(d,'lm_dam','nhat')||is(d,'lm_matdo','thua');
+  if(dam&&minh) L.push('<b>Mày đậm + mắt thông minh</b> — nhìn nhận tốt, kiên định, có lý tưởng: thấy đúng và giữ được điều đúng.');
+  else if(dam&&lodo) L.push('<b>Mày đậm + mắt lờ đờ</b> — lập trường kiên định nhưng thiếu sáng suốt: giữ chặt cả những điều chưa chắc đúng.');
+  else if(thua&&minh) L.push('<b>Mày thưa/nhạt + mắt thông minh</b> — nhìn nhận vấn đề tốt nhưng lập trường không kiên định: thấy ra mà dễ nhường.');
+  else if(thua&&lodo) L.push('<b>Mày thưa + mắt lờ đờ</b> — nhìn nhận mù mờ, lập trường thay đổi liên tục: rất dễ bị người khác định hướng.');
+  else if(dam) L.push('<b>Lông mày đậm</b> — lập trường kiên định, nguyên tắc, khó lay chuyển.');
+  else if(thua) L.push('<b>Lông mày nhạt/thưa</b> — lập trường linh hoạt, dễ thay đổi theo hoàn cảnh.');
+  if(is(d,'lm_matdo','ram')&&dam) L.push('<b>Mày rậm và đậm</b> — lập trường dày đặc, dễ thành cố chấp'+((R.T==='moc'||R.comps.includes('moc'))?'; với tướng Mộc đây là nét xung đột.':'.'));
+  if(is(d,'lm_giao','co')) L.push('<b>Hai đầu mày giao nhau</b> — xung đột lập trường, dễ gây mâu thuẫn với người xung quanh và với chính mình.');
+  if(is(d,'lm_kc','xa')) L.push('<b>Mày xa mắt</b> — giữ vững lập trường, nhưng dễ bảo thủ.');
+  if(is(d,'lm_kc','gan')) L.push('<b>Mày gần mắt</b> — lập trường đè lên nhãn quan: xung đột lập trường, độ minh mẫn bị ảnh hưởng, có thể ẩn bạo lực ngầm khi bị dồn ép.');
+  if(d.lm_huong) L.push(`<b>${optLabel('lm_huong',d.lm_huong)}</b> — ${lc(optMeaning('lm_huong',d.lm_huong))}`);
+  if(is(d,'lm_micot','cao')) L.push('<b>Mi cốt cao</b> — bảo thủ, xung đột nội tâm, dễ trầm uất khi bế tắc.');
+  if(is(d,'toc','khoe')) L.push('<b>Tóc mềm, dày, khỏe</b> — thái độ sống được nuôi dưỡng; với tướng Kim là nét bù khuyết quý.');
+  if(is(d,'toc','thua')) L.push('<b>Tóc thưa, yếu</b> — Mộc khí (thái độ sống, sự mềm dẻo) cần được bồi đắp.');
+  return L;
+}
+function luanMat(d,R){
+  const L=[]; const s=d.mat_size, sau=d.mat_sau;
+  if(s==='to'&&sau==='loi') L.push('<b>Mắt to mà lồi</b> — cảm xúc lớn và lộ ra ngay: nhìn đời phóng khoáng, nghĩ chuyện lớn, cởi mở, dễ kết nối — nhưng hấp tấp, vội vàng.');
+  else if(s==='to'&&sau==='sau') L.push('<b>Mắt to mà sâu</b> — nghĩ lớn nhưng giữ kín: vừa có tầm vừa nhìn thấu bản chất, cảm xúc mạnh mà không phơi ra.');
+  else if(s==='nho'&&sau==='sau') L.push('<b>Mắt nhỏ và sâu</b> — tỉ mỉ, cẩn trọng, giấu cảm xúc, đánh giá khách quan: người này luôn thấy nhiều hơn những gì họ nói ra.');
+  else if(s==='nho'&&sau==='loi') L.push('<b>Mắt nhỏ mà lồi</b> — chú ý chi tiết nhưng phản ứng nhanh, dễ vội.');
+  else { if(s&&s!=='vua') L.push(`<b>${optLabel('mat_size',s)}</b> — ${lc(optMeaning('mat_size',s))}`); if(sau&&sau!=='binh') L.push(`<b>Mắt ${optLabel('mat_sau',sau).toLowerCase()}</b> — ${lc(optMeaning('mat_sau',sau))}`); }
+  const tinh=is(d,'mat_tinh','tinh'), minh=is(d,'mat_minh','minh'), sau2=sau==='sau';
+  const n=[tinh,minh,sau2].filter(Boolean).length;
+  if(n===3) L.push('<b>Đủ cả tĩnh – minh – sâu</b> — bảy phần phúc trí ở mắt trọn vẹn: nhãn quan của người gánh việc lớn, hiểu biết, nhìn thấu.');
+  else if(n===2) L.push(`<b>Có ${joinVi([tinh&&'tĩnh',minh&&'minh',sau2&&'sâu'].filter(Boolean))}</b>, thiếu ${[!tinh&&'tĩnh',!minh&&'minh',!sau2&&'sâu'].filter(Boolean)[0]} — nhãn quan tốt nhưng chưa trọn.`);
+  else { if(tinh) L.push('<b>Mắt tĩnh</b> — tâm tĩnh, hợp việc cần tập trung, gánh vác việc lớn.'); if(minh) L.push('<b>Đen trắng phân minh</b> — thông minh, hiểu biết, từng trải.'); }
+  if(is(d,'mat_tinh','dong')) L.push('<b>Mắt không tĩnh</b> — tâm hay xao động; khó giữ một việc lâu dài.');
+  if(is(d,'mat_minh','lodo')) L.push('<b>Mắt lờ đờ, mờ đục</b> — nhìn nhận mù mờ, thiếu sáng suốt; dễ quyết định theo người khác.');
+  (d.mat_sac||[]).forEach(v=>L.push(`<b>Ánh mắt ${optLabel('mat_sac',v).toLowerCase()}</b> — ${lc(optMeaning('mat_sac',v))}`));
+  if(R.gt==='nu'&&minh&&has(d,'mat_sac','buon')) L.push('<i>Phụ nữ mắt sáng mà buồn</i>: thông minh, nhạy cảm, dễ khổ vì tình cảm.');
+  if(is(d,'mat_than','tinhnhue')) L.push('<b>Thần mắt tinh nhuệ</b> — ánh nhìn có lực, ý chí sáng.');
+  if(is(d,'mat_than','toi')) L.push('<b>Thần mắt tối</b> — thần khí hao; cần phục hồi năng lượng tinh thần.');
+  if(is(d,'mat_bong','tham')) L.push('<b>Bọng mắt thâm</b> — dấu hiệu thần khí hao tổn, dễ mất bản tâm nếu kéo dài.');
+  if(has(d,'mat_db','amduong')) L.push('<b>Âm dương nhãn</b> (một to một bé, mờ đục mà có lực) — tướng đặc biệt, hợp với nghề pháp sư.');
+  if(has(d,'mat_db','hip')){ if(R.tuoi&&R.tuoi<12&&minh) L.push('<b>Thụy châu nhãn</b> ở trẻ dưới 12 tuổi, đen trắng phân minh — cực kỳ thông minh.'); else L.push('<b>Mắt híp</b> — dấu hiệu "thụy châu nhãn" chỉ luận là cực kỳ thông minh ở trẻ dưới 12 tuổi có mắt đen trắng phân minh.'); }
+  const p=R.phuc.matP; if(p!==null) L.push(`Phúc trí phần mắt (tĩnh – minh – sâu): <b>${p}%</b>.`);
+  return L;
+}
+function luanMui(d,R){
+  const L=[];
+  if(is(d,'mui_soncan','cao')) L.push('<b>Sơn căn cao</b> — sức khỏe thể lý tốt, sinh lực cao: phúc về thân.');
+  if(is(d,'mui_soncan','thap')) L.push('<b>Sơn căn thấp</b> — sinh lực chưa dồi dào; cần giữ gìn sức khỏe thể lý.');
+  if(has(d,'mui_db','vetngang')) L.push('<b>Vết ngang ở sơn căn</b> — dễ mắc tật; nên chú ý sức khỏe.');
+  if(is(d,'mui_cao','cao')) L.push('<b>Mũi cao, gồ</b> — cái tôi trong hành động cao, nhu cầu thành tựu lớn.');
+  if(is(d,'mui_cao','thap')) L.push('<b>Mũi thấp, tẹt</b> — cái tôi thấp: dễ hòa, ít tranh, nhưng cũng ít đòi hỏi cho mình.');
+  if(is(d,'mui_canh','to')) L.push('<b>Cánh mũi to, bè, dày thịt</b> — nhu cầu hiện diện cao: thường gặp ở diễn viên, diễn giả.');
+  if(is(d,'mui_canh','hep')) L.push('<b>Cánh mũi hẹp</b> — nhu cầu hiện diện thấp'+(is(d,'mui_cao','cao')?'; đi cùng mũi cao là cái tôi cao mà cô độc.':'.'));
+  if(is(d,'mui_lo','to')) L.push('<b>Lỗ mũi to, lộ</b> — dễ chi tiêu hoang phí, hao tài, che giấu cảm xúc kém.');
+  if(is(d,'mui_xuong','vung')) L.push('<b>Cốt mũi vững mà không lộ</b> — cái tôi hành động vững chắc mà không thái quá.');
+  if(is(d,'mui_xuong','lo')) L.push('<b>Mũi thẳng, lộ xương</b> — hành động cứng, rõ; gia tăng cho Kim, Thổ, xung đột với Mộc, Hỏa.');
+  if(is(d,'mui_xuong','thit')) L.push('<b>Mũi đầy thịt</b> — cái tôi mềm, ấm; gia tăng cho Mộc, Hỏa.');
+  if(is(d,'mui_dau','hech')) L.push('<b>Đầu mũi hếch</b> — gia tăng cho Hỏa: cởi mở, muốn hiện diện.');
+  if(has(d,'mui_db','gay')) L.push('<b>Mũi gãy</b> — niềm tin, cái tôi từng (hoặc dễ) bị sụp đổ; '+(R.gt==='nu'?'với phụ nữ, liên quan đến người chồng.':'với đàn ông, liên quan đến quan hệ công việc, sự nghiệp.'));
+  if(has(d,'mui_db','lech')) L.push('<b>Mũi lệch</b> — trục sinh lực không cân, hành động dễ lệch hướng.');
+  if(has(d,'mui_db','thongthien')) L.push('<b>Mũi thông thiên</b> — nhiều dục vọng, cần được thỏa mãn.');
+  if(d.gm) L.push(`<b>Gò má: ${lc(optLabel('gm',d.gm))}</b> — ${lc(optMeaning('gm',d.gm))}`);
+  if(R.hoaDuc) L.push('<i>Tướng Hỏa mà gò má nhiều thịt, nặng, dày, bóng</i>: dục tính cao, cảm xúc thất thường, khó giữ chữ tín.');
+  if(is(d,'bau_ma','thit')) L.push('<b>Bầu má có thịt</b> — đưa cảm xúc vào mối quan hệ, vào công việc.');
+  const q=d.mui_cao, g=d.gm;
+  if(q&&g){
+    const quan = q==='cao'?'mạnh':(q==='thap'?'yếu':'vừa');
+    const than = (g==='lo'||g==='vung')?'mạnh':(g==='thap'||g==='thit'?'yếu':'vừa');
+    let t='';
+    if(quan==='mạnh'&&than==='mạnh') t='Quân mạnh – thần mạnh: muốn gì thì làm được nấy, nhu cầu và hành động song hành — tướng của người làm chủ.';
+    else if(quan==='mạnh'&&than!=='mạnh') t='Quân mạnh – thần '+than+': nhu cầu đi trước hành động, cần người thực thi bên cạnh.';
+    else if(quan!=='mạnh'&&than==='mạnh') t='Quân '+quan+' – thần mạnh: hành động, cạnh tranh mạnh hơn nhu cầu bản thân — dễ làm vì người, vì tập thể.';
+    else t='Quân '+quan+' – thần '+than+': nhu cầu và hành động đều nhẹ — sống hòa, ít tranh.';
+    L.push('<b>Mũi – gò má (Quân – Thần)</b>: '+t);
+  }
+  return L;
+}
+function luanMieng(d,R){
+  const L=[];
+  if(is(d,'moi_tren','day')) L.push('<b>Môi trên dày, tươi</b> — thật thà, đôn hậu, chân thành trong quan hệ sơ giao.');
+  if(is(d,'moi_tren','mong')) L.push('<b>Môi trên mỏng</b> — trong quan hệ sơ giao không thật lòng, khen chê không thật; giữ khoảng cách với người mới.');
+  if(R.gt==='nu'&&is(d,'moi_duoi','to')) L.push('<b>Môi dưới to, mọng</b> — sinh nở dễ, tử cung tốt.');
+  if(is(d,'moi_mau','hong')) L.push('<b>Môi đỏ, hồng</b> — dễ có các mối quan hệ tốt, giao tiếp tốt.');
+  if(is(d,'moi_mau','xam')) L.push('<b>Môi xám, nhợt</b> — dấu hiệu lạnh nhạt, khí huyết giao tế kém.');
+  if(is(d,'mieng_net','tuoi')) L.push('<b>Miệng tươi</b> — giao tiếp tốt, chia sẻ tốt: cửa giao tế luôn mở.');
+  if(is(d,'mieng_net','buon')) L.push('<b>Miệng xấu, buồn</b> — bộc lộ cảm xúc tiêu cực; lời nói khó chạm tới người.');
+  if(is(d,'mieng_rong','rong')) L.push('<b>Miệng rộng</b> — giao tiếp phóng khoáng; gia tăng cho Hỏa, nhưng quá rộng là xung đột với Kim.');
+  if(is(d,'mieng_cuoi','kin')) L.push('<b>Cười kín răng</b> — quản trị nguồn lực mạnh; mặt trái là dễ keo kiệt.');
+  if(is(d,'mieng_cuoi','holoi')) L.push('<b>Cười hở lợi</b> — khó giữ bí mật.');
+  if(d.rang_tren) L.push(is(d,'rang_tren','deu')?'<b>Răng trên đều, khít</b> — thâm giao huyết thống bền chặt: nguồn lực, xuất phát điểm, giáo dục gia đình có nền.':'<b>Răng trên thưa, lệch</b> — thâm giao huyết thống có khe hở: nguồn lực gia đình, xuất phát điểm không trọn vẹn.');
+  if(d.rang_duoi) L.push(is(d,'rang_duoi','deu')?'<b>Răng dưới đều, khít</b> — thâm giao không huyết thống (hôn nhân) gắn bó.':'<b>Răng dưới thưa, lệch</b> — thâm giao không huyết thống (hôn nhân) dễ có khoảng cách.');
+  if(is(d,'phap_lenh','vuot')) L.push(R.tuoi&&R.tuoi>=40?'<b>Pháp lệnh rõ, vượt mép</b> — sau 40 tuổi pháp lệnh hiện là lẽ thường; vượt mép vẫn cho thấy lời nói có trọng lượng.':'<b>Pháp lệnh rõ, vượt mép miệng (trước 40 tuổi)</b> — lời nói có quyền lực, uy tín; có khả năng lãnh đạo.');
+  if(is(d,'phap_lenh','nhap')) L.push('<b>Pháp lệnh nhập khẩu</b> — lời nói dễ gây tai họa; tu khẩu là việc cả đời.');
+  if(is(d,'nhan_trung','nong')) L.push('<b>Nhân trung nông, ngắn</b> — thiếu sự yêu thương từ gia đình.');
+  if(has(d,'mieng_db','lech')) L.push('<b>Miệng lệch</b> — lời nói hư tình giả ý, dễ gây tai họa.');
+  if(has(d,'mieng_db','ho')) L.push('<b>Miệng hay hở</b> — khí lực dễ thoát; nếu đi cùng hình thần bất tương phối là dấu hiệu cần cẩn trọng.');
+  return L;
+}
+function luanTai(d,R){
+  const L=[];
+  const sz=d.tai_size, dy=d.tai_day;
+  if(sz==='to'&&dy==='day') L.push('<b>Tai to và dày</b> — cảm nhận vừa đa dạng vừa sâu sắc: đời sống tinh thần phong phú.');
+  else { if(sz&&sz!=='vua') L.push(`<b>Tai ${optLabel('tai_size',sz).toLowerCase()}</b> — ${lc(optMeaning('tai_size',sz))}`); if(dy&&dy!=='vua') L.push(`<b>Tai ${optLabel('tai_day',dy).toLowerCase()}</b> — ${lc(optMeaning('tai_day',dy))}`); }
+  if(is(d,'tai_dai','to')) L.push('<b>Dái tai to</b> — hài lòng với hiện tại, tích cực'+(R.nghiLuc!==null&&R.nghiLuc<46?'; nhưng vùng nghị lực đang yếu, nên mặt trái hiện ra: thiếu động lực, chí tiến thủ.':'.'));
+  if(is(d,'tai_dai','nho')) L.push('<b>Dái tai nhỏ</b> — khó hài lòng: luôn muốn hơn — động lực lớn mà bình an ít.');
+  if(is(d,'tai_hinh','vanh')) L.push('<b>Tai vểnh (nghinh phong nhĩ)</b> — thích phiêu lưu, mạo hiểm.');
+  if(is(d,'tai_hinh','lon')) L.push('<b>Tai lộn</b> — kiên định, hợp với nhóm chinh phục.');
+  if(is(d,'tai_xuong','lo')) L.push('<b>Tai lộ xương</b> — tinh thần cứng cỏi; gia tăng cho Kim, xung đột với Mộc.');
+  const p=R.phuc.tam; if(p!==null) L.push(`Phúc về tâm (thể hiện qua tai): <b>${p}%</b>.`);
+  return L;
+}
+function luanCam(d,R){
+  const L=[];
+  if(d.cam_hinh) L.push(`<b>${optLabel('cam_hinh',d.cam_hinh)}</b> — ${lc(optMeaning('cam_hinh',d.cam_hinh)||'theo đuổi mục tiêu ở mức vừa phải.')}`);
+  if(is(d,'cam_xuong','vung')) L.push('<b>Cốt cằm vững, không lộ</b> — theo đuổi mục tiêu bền bỉ mà không cực đoan.');
+  if(is(d,'cam_xuong','lo')) L.push('<b>Cằm lộ xương, góc cạnh</b> — theo đuổi mục tiêu bằng ý chí cứng; dễ thái quá.');
+  if(is(d,'cam_xuong','thit')) L.push('<b>Cằm nhiều thịt, mềm</b> — theo đuổi mục tiêu bằng sự mềm dẻo hơn là quyết liệt.');
+  if(is(d,'co','dai')) L.push('<b>Cổ dài</b> — tầm nhìn xa, biết nhiều nhưng hành động chậm: hợp làm quân sư.');
+  if(is(d,'co','ngan')) L.push('<b>Cổ ngắn</b> — hành động nhanh: hợp với đội hành động.');
+  return L;
+}
+
+/* ---------- Tổng luận ---------- */
+function relWord(a,b){ if(a===b) return 'đồng hành'; if(SINH[a]===b) return a+'sinh'; if(SINH[b]===a) return b+'sinh'; return 'khắc'; }
+function composeLead(R){
+  const T=R.T, t=TUONG[T], d=R.d, P=[];
+  const name=R.ten?`<b>${esc(R.ten)}</b>`:'Người này';
+  if(T==='thuy'){
+    const [a,b]=R.comps;
+    P.push(`${name} mang <b>Thủy tướng</b> — loại tướng hiếm, khó quan sát, hình không cố định, là sự hòa trộn của <b>${HANH[a]}</b> (chữ ${TUONG[a].duc}) và <b>${HANH[b]}</b> (chữ ${TUONG[b].duc}). Như nước vào bình nào mang hình bình ấy: lúc ${lc(TUONG[a].core)}, lúc ${lc(TUONG[b].core)}. Cái tài của Thủy là linh hoạt; cái khó của Thủy là nhất tâm — phải biết đâu là gốc của mình.`);
+  } else {
+    let s=`${name} mang diện tướng chủ đạo <b>${HANH[T]}</b> — tướng của chữ <b>${t.duc}</b>: ${lc(t.core)}. ${t.tc}`;
+    if(R.second&&R.secondPct>=55){
+      const r=relWord(T,R.second); let blend;
+      if(r==='khắc') blend=`hai khí tương khắc, nên trong người luôn có hai giọng nói: một bên ${lc(TUONG[T].core.split(',')[0])}, một bên ${lc(TUONG[R.second].core.split(',')[0])}`;
+      else if(r===T+'sinh') blend=`${HANH[T]} sinh ${HANH[R.second]}: bản tính gốc nuôi dưỡng nét phụ, phần ${HANH[R.second]} là nơi năng lượng chảy ra`;
+      else blend=`${HANH[R.second]} sinh ${HANH[T]}: nét phụ âm thầm nâng đỡ bản tính gốc`;
+      s+=` Bên dưới lớp ${HANH[T]} còn một mạch <b>${HANH[R.second]}</b> khá rõ (${R.secondPct}%) — ${blend}.`;
+    }
+    P.push(s);
+  }
+  const g=R.gxbSum;
+  let s2=`Soi theo Tứ diện tướng: <b>${g.gt}</b> nét gia tăng, <b>${g.xd}</b> nét xung đột, <b>${g.bk}</b> nét bù khuyết. `;
+  if(g.gt>=Math.ceil(g.gtN*0.6)&&g.xd===0&&g.bk===0) s2+='Tướng rất thuần — bản tính đi một đường thẳng, mạnh ở chỗ mạnh nhất, nhưng cũng dễ thái quá; tướng đẹp cần đủ âm dương, mà ở đây dương đang lấn.';
+  else if(g.xd>=2&&g.bk===0) s2+='Nhiều chỗ tâm và tướng giằng co mà chưa có nét bù — đây là nơi sinh ra cái khổ, và cũng là nơi rèn ra con người.';
+  else if(g.xd>=2&&g.bk>=1) s2+='Xung đột nhiều nhưng có nét bù khuyết — đời có giằng co, song tự thân biết tìm thế cân bằng.';
+  else if(g.bk>=1&&g.xd<=1) s2+='Có bù khuyết, ít xung đột — tướng có độ hài hòa: biết tự cân chỗ thiếu, tránh được thái quá.';
+  else if(g.gt>=1) s2+='Bản tướng được gia tăng ở mức vừa — tính cách rõ nét mà chưa cực đoan.';
+  else s2+='Các nét đặc trưng chưa hiện rõ — cần quan sát thêm để luận cho chắc.';
+  P.push(s2);
+  const tri=[]; const td=x=>d[x];
+  if(td('td_thuong')==='troi') tri.push('trí lực nổi trội'); if(td('td_trung')==='troi') tri.push('hoạt lực dồi dào'); if(td('td_ha')==='troi') tri.push('khả năng kết nối xã hội mạnh');
+  const kem=[]; if(td('td_thuong')==='kem') kem.push('trí lực'); if(td('td_trung')==='kem') kem.push('hoạt lực'); if(td('td_ha')==='kem') kem.push('kết nối xã hội');
+  let s3='';
+  if(tri.length) s3+=`Tam đình cho thấy ${joinVi(tri)}${kem.length?`, trong khi ${joinVi(kem)} cần bồi đắp`:''}. `;
+  else if(kem.length) s3+=`Tam đình cho thấy ${joinVi(kem)} là vùng cần bồi đắp. `;
+  if(R.nghiLuc!==null) s3+=`Vùng nghị lực (mũi – cằm – trán – gò má) ở mức <b>${BANDTXT[band(R.nghiLuc)].toLowerCase()}</b>. `;
+  const ph=R.phuc;
+  if(ph.loai==='tienthien') s3+='Phúc tiên thiên dày — thân, tâm, trí đều có nền: trước 35 tuổi vận khí thường thuận, nhưng phải giữ mình khỏi kiêu mạn.';
+  else if(ph.loai==='batuc') s3+='Phúc tiên thiên chưa đủ — đường đi phải dựa vào hậu thiên: giấu tài, ẩn mình, nhất tâm mà thành.';
+  else if(ph.avg!==null) s3+='Phúc ở mức trung — có chỗ dày chỗ mỏng, phần còn lại do hậu thiên định đoạt.';
+  if(s3) P.push(s3);
+  if(R.ht.has){
+    const m={dong:'thần cùng hành với hình — ổn định, nhưng thành thì cực thành, bại thì cực bại',hinhsinh:'hình sinh thần — dễ được lợi từ môi trường, gặp quý nhân',thansinh:'thần sinh hình — dễ ôm đồm, hao hụt nội lực',batphoi:'hình thần bất tương phối — tâm xung mệnh'};
+    P.push(`Thần <b>${R.ht.than.ten}</b> (${HANH[R.ht.tH]}) đặt trên hình ${HANH[T]}: ${m[R.ht.rel]}.${R.ht.xung?` Thêm nữa, ${R.ht.xungTxt} — hình thần xung nhau.`:''}`);
+  }
+  const lts=LT_ORDER.map(k=>({k,...R.lt[k]})).filter(x=>x.score!=null).sort((a,b)=>b.score-a.score);
+  if(lts.length>=2){
+    const hi=lts[0], lo=lts[lts.length-1];
+    if(hi.score-lo.score>=8) P.push(`Trong Lục thân, cung mạnh nhất là <b>${hi.ten}</b> (${lc(hi.y)} — xem ở ${hi.bovi.toLowerCase()}), cung yếu nhất là <b>${lo.ten}</b> (${lc(lo.y)} — xem ở ${lo.bovi.toLowerCase()}). Đời người này được nâng bởi ${lc(hi.y.split(/[,·]/)[0])}, và phải học nhiều nhất ở ${lc(lo.y.split(/[,·]/)[0])}.`);
+  }
+  let s5=`Cái khổ gốc của tướng ${HANH[T]}: ${lc(t.khoGoc)}`;
+  if(R.conf.length) s5+=` Trên khuôn mặt này, mâu thuẫn nổi bật nhất là <b>${R.conf[0].t.replace(/"/g,'')}</b> — ${lc(R.conf[0].kho)}`;
+  P.push(s5);
+  P.push(`Lời dạy cho tướng này: <b>Nhất tâm</b> — hiểu rõ tâm mình và đặt mình vào đúng môi trường. ${t.mt} Khi không thay đổi được hiện thực, hãy thay đổi thái độ với hiện thực; tướng không cố định, nó đổi theo cách mình sống.`);
+  return P;
+}
+
+/* ---------- Phúc ---------- */
+function luanPhuc(R){
+  const p=R.phuc, out=[];
+  if(p.loai==='tienthien'){
+    out.push('<b>Phúc tiên thiên dày.</b> Thân (mũi), tâm (tai), trí (trán – mắt) đều có nền. Trước 35 tuổi vận khí thường tốt.');
+    out.push('Nhưng phúc tiên thiên là con dao hai lưỡi: dễ sinh kiêu mạn, xa hoa, phóng dục mà tổn phúc. Quãng <b>34–38 tuổi</b> là lúc dễ đổ gục nếu không tự kiểm soát; chỉ 20–30% giữ được — và họ là nhóm tinh hoa.');
+    if(R.tuoi&&R.tuoi>=33&&R.tuoi<=38) out.push(`<span class="k">Ở tuổi ${R.tuoi}, ${R.gt==='nu'?'chị':'anh'} đang đứng đúng quãng thử thách này — giữ mình là giữ phúc.</span>`);
+  } else if(p.loai==='batuc'){
+    out.push('<b>Tiên thiên bất túc.</b> Xuất phát điểm về thân – tâm – trí chưa dày.');
+    out.push('Lời khuyên của tướng học: tránh kiêu ngạo; giấu tài, ẩn mình, tránh hiển lộ sớm; tránh làm chuyện bao đồng — kẻo hao tổn sinh lực. Phúc của người này nằm ở <b>hậu thiên</b>: đạt được qua nhất tâm, thường sau 35 tuổi.');
+  } else if(p.avg!==null){
+    const arr=[['thân',p.than],['tâm',p.tam],['trí',p.tri]].filter(x=>x[1]!==null).sort((a,b)=>b[1]-a[1]);
+    out.push(`<b>Phúc ở mức trung.</b> Dày nhất là phúc về ${arr[0][0]}, mỏng nhất là phúc về ${arr[arr.length-1][0]}. Phần tiên thiên cho một nền vừa đủ; phần còn lại do hậu thiên — sự nhất tâm sau 35 tuổi — quyết định.`);
+  } else out.push('Chưa đủ dữ liệu về mũi, tai, trán, mắt để luận phúc.');
+  if(p.hauthien) out.push('<b>Thanh tướng</b>: nói từ trong bụng, giọng đầy trung khí — dấu hiệu phúc hậu thiên đang được bồi đắp.');
+  return out;
+}
+function luanHinhThan(R){
+  const h=R.ht, out=[];
+  if(!h.has){ out.push('Chưa chọn thần chủ đạo nên chưa xét được quan hệ Hình – Thần.'); }
+  else{
+    out.push(`Hình <b>${HANH[R.T]}</b> · Thần <b>${h.than.ten}</b> (${HANH[h.tH]}) — ${h.than.y}.`);
+    const m={
+      dong:'<b>Thần cùng hành với hình</b>: ổn định, thuần nhất. Thành thì cực thành, bại thì cực bại. Cần biết thoái lui khi thành công, tích lũy nguồn lực — đừng dồn hết vào một ván.',
+      hinhsinh:'<b>Hình sinh thần</b>: dễ được lợi từ môi trường, gặp quý nhân — năng lượng của hình tự nhiên nuôi cách mình biểu lộ, nên người khác dễ quý, dễ giúp.',
+      thansinh:'<b>Thần sinh hình</b>: dễ ôm đồm, hao hụt nội lực — cách biểu lộ phải gồng để nuôi bản tướng; cần học cách từ chối.',
+      batphoi:'<b>Hình thần bất tương phối</b>: tâm xung mệnh — cách sống, cách biểu lộ đi ngược với khuôn mình được sinh ra. Khổ, nhưng chính cái khổ ấy tạo nên người xuất chúng nếu biết nhìn thấy nó để điều chỉnh, gỡ rối, chỉnh tâm.'};
+    out.push(m[h.rel]);
+  }
+  if(h.xung) out.push(`<b>Hình thần xung nhau</b>: ${h.xungTxt}.`);
+  if(h.canh.length) out.push(`<span style="color:var(--bad)"><b>Cảnh tỉnh</b>: hình thần không thuận lại đi kèm ${joinVi(h.canh)} — tài liệu cảnh báo dễ hao tổn tuổi thọ hoặc bị lừa. Đây là lời nhắc giữ gìn sức khỏe và cẩn trọng với người, không phải lời định sinh tử.</span>`);
+  return out;
+}
+
+/* ---------- Lục thân ---------- */
+const LTV={
+ huynh:{vuong:'Anh em, bạn bè là chỗ dựa thật: quanh mình có những người đồng trang lứa cùng chí hướng, giúp nhau đi xa.',kha:'Quan hệ anh em, bạn bè khá tốt — có người để sẻ chia, dù không phải ai cũng cùng đường.',tb:'Bạn bè có nhưng không sâu; anh em lúc gần lúc xa. Muốn có chỗ dựa phải chủ động vun đắp.',suy:'Quan hệ đồng trang lứa nhiều va chạm hoặc thiếu nâng đỡ; dễ cạnh tranh với chính người gần mình. Cẩn trọng chuyện hùn hạp với bạn bè.'},
+ tai:{vuong:'Khả năng kiếm tiền tốt, tài lộc dồi dào — biết nắm và biết giữ cơ hội tài chính.',kha:'Tài lộc khá: có năng lực kiếm tiền, cần kỷ luật để giữ.',tb:'Tài chính lên xuống: kiếm được nhưng hay rò rỉ — cần nguyên tắc chi tiêu rõ ràng.',suy:'Khả năng kiếm tiền chưa thuận: dễ hao tài hoặc kiếm vất vả. Đây là vùng phải dùng chữ "tích lũy" thay vì chữ "đánh nhanh".'},
+ quan:{vuong:'Đường công việc vững: gánh được áp lực; cản trở đến thường hóa thành thử thách giúp trưởng thành; dễ được trọng dụng.',kha:'Công việc khá ổn, có chỗ đứng; có giai đoạn cản trở nhưng vượt qua được.',tb:'Công việc lúc thuận lúc nghịch, dễ gặp sự kiện cản trở. Muốn bền phải chọn đúng môi trường hợp bản tướng.',suy:'Công việc dễ bất ổn, áp lực và cản trở (quan quỷ) nhiều. Không phải số kém — mà là chưa đặt mình đúng chỗ.'},
+ phu:{vuong:'Được cha mẹ, bề trên nâng đỡ; dễ gặp quý nhân; xuất phát điểm có nền.',kha:'Có sự hỗ trợ từ cha mẹ, bề trên ở mức khá.',tb:'Sự nâng đỡ từ bề trên không đều; nhiều việc phải tự thân.',suy:'Ít được che chở từ cha mẹ, bề trên; quý nhân đến muộn. Tự lập sớm — và chính điều đó làm nên bản lĩnh.'},
+ tu:{vuong:'Con cái, cấp dưới là phúc: dễ có người kế tục, cấp dưới trung thành, quản trị người tốt.',kha:'Quan hệ với con cái, cấp dưới khá tốt.',tb:'Con cái, cấp dưới cần nhiều công dạy dỗ; quan hệ trên – dưới phải chủ động xây.',suy:'Con cái, cấp dưới là nơi hao tâm: dễ vất vả vì người dưới hoặc khó tìm người kế tục. Hãy đầu tư vào việc dạy người.'}
+};
+const SPOUSE={vuong:'là người có nền tảng, giỏi giang, phù trợ đắc lực',kha:'là người đảm đang, hợp tác được, hai bên nâng nhau',tb:'cần thời gian để hòa hợp — hai người phải học cách nhìn nhau',suy:'là mối duyên nhiều thử thách — người phối ngẫu có thể vất vả, hoặc hai bên khó đồng điệu; cần kiên nhẫn và tôn trọng'};
+function spouseTxt(rel,R){
+  const L=R.lt[rel]; if(L.band==='na') return '';
+  const who=R.gt==='nam'?'người vợ':'người chồng';
+  const feats=L.q.items.filter(i=>i.y).slice(0,5).map(i=>lc(i.y));
+  return `<div class="p"><span class="k">Về ${who}:</span> ${who.charAt(0).toUpperCase()+who.slice(1)} ${SPOUSE[L.band]}. Vì bộ vị ${L.bovi.toLowerCase()} cũng là chân dung của ${who}, nên ${who} mang nét: ${feats.length?joinVi(feats):'chưa đủ dữ liệu để phác họa'}.</div>`;
+}
+
+/* ---------- Hỏi theo khía cạnh ---------- */
+const ASPECTS=[
+ {k:'congviec',ic:'💼',t:'Công việc',rel:()=> 'quan'},
+ {k:'tienbac',ic:'💰',t:'Tiền bạc',rel:()=> 'tai'},
+ {k:'honnhan',ic:'💞',t:'Hôn nhân',rel:R=> R.gt==='nam'?'tai':'quan'},
+ {k:'chame',ic:'🏛️',t:'Cha mẹ · Quý nhân',rel:()=> 'phu'},
+ {k:'concai',ic:'🌱',t:'Con cái · Cấp dưới',rel:()=> 'tu'},
+ {k:'anhem',ic:'🤝',t:'Anh em · Bạn bè',rel:()=> 'huynh'}
+];
+function relWhy(rel,T){
+  const L={huynh:`cùng hành ${HANH[T]} với diện tướng`,tai:`${HANH[T]} khắc ${HANH[KHAC[T]]} — hành bị diện tướng khắc`,quan:`${HANH[khacBoi(T)]} khắc ${HANH[T]} — hành khắc diện tướng`,phu:`${HANH[sinhRa(T)]} sinh ${HANH[T]} — hành sinh cho diện tướng`,tu:`${HANH[T]} sinh ${HANH[SINH[T]]} — hành do diện tướng sinh ra`};
+  return L[rel];
+}
+function aspectHTML(key,R){
+  const A=ASPECTS.find(a=>a.k===key); const rel=A.rel(R); const L=R.lt[rel]; const d=R.d, T=R.T;
+  let h=`<div class="path"><b>${A.t}</b><span class="ar">→</span>Lục thân <b>${L.ten}</b><span class="ar">→</span>${elTag(L.h)}<span class="ar">→</span><b>${L.bovi}</b></div>`;
+  h+=`<p class="mini">Diện tướng ${HANH[T]}: ${relWhy(rel,T)}. Nên muốn xem ${A.t.toLowerCase()}, ta xét bộ vị hành ${HANH[L.h]} — ${BOVI[L.h].ten.toLowerCase()}.</p>`;
+  if(L.band==='na'){ h+=`<div class="warnbox">Chưa có đủ đặc điểm của ${L.bovi.toLowerCase()} để luận. Hãy bổ sung ở bước tương ứng.</div>`; }
+  else{
+    h+=`<div class="meter"><div class="lbl"><span>Độ vượng của bộ vị ${L.ten}</span><span style="color:${BANDCOL[L.band]}">${L.score} · ${BANDTXT[L.band]}</span></div><div class="bar"><i style="width:${L.score}%;background:${BANDCOL[L.band]}"></i></div></div>`;
+    if(L.q.good.length) h+=`<div class="p" style="margin-top:10px"><span class="k">Điểm tốt:</span> ${L.q.good.map(i=>`${i.t} (${i.y})`).join('; ')}.</div>`;
+    if(L.q.bad.length) h+=`<div class="p"><span class="k" style="color:var(--bad)">Điểm khuyết:</span> ${L.q.bad.map(i=>`${i.t}${i.y?` (${i.y})`:''}`).join('; ')}.</div>`;
+    if(L.h==='tho'&&L.q.parts){ const pp=L.q.parts; const nm={mui:'Mũi',tran:'Trán',gm:'Gò má',cam:'Cằm'}; h+=`<div class="p mini">${Object.keys(pp).filter(k=>pp[k].score!=null).map(k=>`${nm[k]}: <b style="color:${BANDCOL[pp[k].band]}">${BANDTXT[pp[k].band]}</b>`).join(' · ')}</div>`; }
+    if(key!=='honnhan') h+=`<div class="quote">${LTV[rel][L.band]}</div>`;
+  }
+  const X=[];
+  if(key==='congviec'){
+    if(R.gt==='nu'&&L.band!=='na') h+=spouseTxt('quan',R);
+    X.push(`Môi trường hợp tướng ${HANH[T]}: ${lc(TUONG[T].mt)}`);
+    if(d.gm) X.push(`Gò má (tính cạnh tranh, lãnh đạo): ${lc(optMeaning('gm',d.gm)||optLabel('gm',d.gm))}`);
+    if(is(d,'phap_lenh','vuot')) X.push('Pháp lệnh vượt mép: lời nói có quyền lực — tiềm năng lãnh đạo.');
+    if(is(d,'phap_lenh','nhap')) X.push('Pháp lệnh nhập khẩu: lời nói dễ gây họa trong công việc — cẩn trọng khi phát ngôn.');
+    if(d.cam_hinh) X.push(`Cằm (theo đuổi mục tiêu): ${lc(optMeaning('cam_hinh',d.cam_hinh)||'vừa phải')}`);
+    if(is(d,'co','dai')) X.push('Cổ dài: hợp vai quân sư, hoạch định — tầm nhìn xa, hành động chậm.');
+    if(is(d,'co','ngan')) X.push('Cổ ngắn: hợp đội hành động, thực thi nhanh.');
+    if(R.gt==='nam'&&has(d,'mui_db','gay')) X.push('Mũi gãy (nam): niềm tin, cái tôi trong quan hệ công việc, sự nghiệp dễ bị sụp đổ.');
+    if(R.khoHopTac.length>=2) X.push(`Khó hợp tác làm ăn: ${joinVi(R.khoHopTac)} — nên làm chủ một mảng riêng hơn là chia quyền.`);
+    if(R.tai.n>=5) X.push(`Tướng tài (${R.tai.n}/7 tiêu chí): có năng lực hiệu triệu, vận dụng nguồn lực, cụ thể hóa vấn đề trừu tượng.`);
+    R.nhom.forEach(n=>X.push(`${n.t}: ${n.y.split('.')[0]}.`));
+  }
+  if(key==='tienbac'){
+    if(R.gt==='nam'&&L.band!=='na') h+=spouseTxt('tai',R);
+    if(is(d,'mui_lo','to')) X.push('Lỗ mũi to, lộ: dễ chi tiêu hoang phí, hao tài — cần một "két khóa" tự động cho khoản tích lũy.');
+    if(is(d,'mieng_cuoi','kin')) X.push('Cười kín răng: quản trị nguồn lực mạnh — giữ tiền giỏi, chỉ cần tránh keo kiệt kẻo mất người.');
+    if(is(d,'cam_hinh','che')) X.push('Cằm chẻ: rõ ràng trong quan hệ lợi ích — hợp làm ăn có hợp đồng minh bạch.');
+    if(d.rang_tren) X.push(is(d,'rang_tren','deu')?'Răng trên đều khít: nguồn lực, xuất phát điểm gia đình có nền.':'Răng trên thưa lệch: nguồn lực huyết thống khuyết — tiền phải tự gây dựng.');
+    if(R.vayMuon) X.push('Tướng Mộc kèm răng thưa / cười hở lợi / mắt to: dễ vướng chuyện vay – mượn tiền bạc; nên rạch ròi tiền nong, có giấy tờ.');
+    if(R.nhom.some(n=>n.k==='thoaman')) X.push('Thuộc nhóm Thỏa mãn, nhiều dục vọng: chi tiêu theo ham muốn — đặt ngân sách trước khi tiêu.');
+    if(is(d,'tai_dai','to')) X.push('Dái tai to: dễ hài lòng — tiền đủ dùng là yên, ít khi liều lĩnh.');
+  }
+  if(key==='honnhan'){
+    if(L.band!=='na'){ h+=spouseTxt(rel,R); }
+    if(d.rang_duoi) X.push(is(d,'rang_duoi','deu')?'Răng dưới đều khít: thâm giao không huyết thống (hôn nhân) gắn bó.':'Răng dưới thưa lệch: hôn nhân dễ có khoảng cách — cần vun đắp chủ động.');
+    if(R.gt==='nu'&&has(d,'mui_db','gay')) X.push('Mũi gãy (nữ): niềm tin, cái tôi liên quan đến người chồng dễ bị tổn thương.');
+    if(has(d,'mat_sac','buon')) X.push('Mắt buồn: dễ truân chuyên tình cảm.');
+    if(has(d,'mat_sac','uot')) X.push('Mắt ướt: đa tình, dễ thương cảm — tình cảm đến nhanh mà cũng dễ lay.');
+    if(R.gt==='nu'&&is(d,'moi_duoi','to')) X.push('Môi dưới to, mọng: sinh nở dễ, tử cung tốt.');
+    if(is(d,'moi_mau','hong')) X.push('Môi đỏ hồng: dễ có quan hệ tốt, giao tiếp hòa thuận.');
+    if(R.hoaDuc) X.push('Tướng Hỏa gò má nhiều thịt, căng bóng: dục tính cao, cảm xúc thất thường — chữ tín trong tình cảm cần giữ.');
+  }
+  if(key==='chame'){
+    if(d.rang_tren) X.push(is(d,'rang_tren','deu')?'Răng trên đều khít: thâm giao huyết thống bền — giáo dục gia đình có nền.':'Răng trên thưa lệch: thâm giao huyết thống có khe hở.');
+    if(is(d,'nhan_trung','nong')) X.push('Nhân trung nông, ngắn: thiếu sự yêu thương từ gia đình.');
+    if((is(d,'mui_cao','thap'))&&is(d,'mui_soncan','cao')) X.push('Mũi nhỏ mà sơn căn cao: sức khỏe cha/mẹ dễ có vấn đề, nhưng bản thân sinh lực cao.');
+    if(R.ht.rel==='hinhsinh') X.push('Hình sinh thần: dễ được lợi từ môi trường, gặp quý nhân.');
+    if(R.phuc.loai==='tienthien') X.push('Phúc tiên thiên dày: xuất phát điểm tốt về thân – tâm – trí.');
+    if(R.phuc.loai==='batuc') X.push('Tiên thiên bất túc: ít dựa được vào gốc — phải tự gây dựng.');
+  }
+  if(key==='concai'){
+    if(R.gt==='nu'&&d.moi_duoi) X.push(is(d,'moi_duoi','to')?'Môi dưới to, mọng: sinh nở dễ, tử cung tốt.':'Môi dưới không mọng: chú ý chăm sóc sức khỏe sinh sản.');
+    if(is(d,'phap_lenh','vuot')) X.push('Pháp lệnh rõ: lời nói có trọng lượng với cấp dưới — dẫn dắt được người.');
+    if(is(d,'phap_lenh','nhap')) X.push('Pháp lệnh nhập khẩu: lời nói với người dưới dễ gây tổn thương — nói ít, làm gương nhiều.');
+    if(is(d,'moi_tren','day')) X.push('Môi trên dày: chân thành — cấp dưới dễ tin.');
+    if(is(d,'moi_tren','mong')) X.push('Môi trên mỏng: khen chê không thật — cấp dưới khó biết mình đứng ở đâu.');
+  }
+  if(key==='anhem'){
+    if(d.rang_tren) X.push(is(d,'rang_tren','deu')?'Răng trên đều khít: tình huyết thống bền chặt.':'Răng trên thưa lệch: tình huyết thống có khoảng cách.');
+    if(is(d,'moi_tren','day')) X.push('Môi trên dày: thật thà, đôn hậu trong quan hệ sơ giao — bạn bè quý.');
+    if(is(d,'moi_tren','mong')) X.push('Môi trên mỏng: quan hệ sơ giao chưa thật lòng — bạn nhiều mà tri kỷ ít.');
+    if(is(d,'mieng_cuoi','holoi')) X.push('Cười hở lợi: khó giữ bí mật — cẩn trọng khi được bạn bè tâm sự.');
+    if(is(d,'lm_giao','co')) X.push('Mày giao nhau: xung đột lập trường — dễ va chạm với người gần.');
+    if(R.nhom.some(n=>n.k==='ketnoi')) X.push('Thuộc nhóm Kết nối: bạn bè là nguồn năng lượng — có kết nối mới xóa được bất an.');
+  }
+  if(X.length) h+=`<div class="h3" style="font-size:15.5px;margin-top:14px">Các nét bổ trợ cho khía cạnh này</div><ul style="margin:0;padding-left:18px">${X.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  return h;
+}
+
+/* =================== GIAO DIỆN =================== */
+const $=s=>document.querySelector(s);
+const LS_DRAFT='dientuong_tqn_draft_v2', LS_REC='dientuong_tqn_records_v2';
+const store={get(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
+let S={info:{ten:'',gt:'',tuoi:''},d:{},img:null,override:null};
+let UI={mode:'wizard',step:0,aspect:'congviec',R:null};
+(function(){const dr=store.get(LS_DRAFT,null);if(dr&&dr.d){S.info=dr.info||S.info;S.d=dr.d||{};}})();
+function saveDraft(){store.set(LS_DRAFT,{info:S.info,d:S.d})}
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),2200)}
+
+/* ---- field render ---- */
+function fieldHTML(k){
+  const f=F[k]; const v=S.d[k]; const multi=!!f.m;
+  const chips=f.o.map(o=>{const on=multi?(Array.isArray(v)&&v.includes(o[0])):v===o[0];
+    return `<button class="chip${multi?' multi':''}${on?' on':''}" data-k="${k}" data-v="${o[0]}">${o[1]}</button>`}).join('');
+  let mean='';
+  if(multi){ if(Array.isArray(v)) mean=v.map(x=>optMeaning(k,x)).filter(Boolean).join(' · '); }
+  else if(v) mean=optMeaning(k,v);
+  return `<div class="field" id="fd-${k}"><div class="flabel">${f.l}</div>${f.h?`<div class="fhint">${f.h}</div>`:'<div style="height:6px"></div>'}<div class="chips">${chips}</div><div class="meaning${mean?' show':''}">${mean}</div></div>`;
+}
+function infoHTML(){
+  return `<div class="field"><div class="flabel">Tên người được xem</div><div style="height:6px"></div><input class="inp" id="i-ten" placeholder="Ví dụ: Nguyễn Văn A" value="${esc(S.info.ten)}"></div>
+  <div class="field"><div class="flabel">Giới tính <span style="color:var(--bad)">*</span></div><div class="fhint">Nam xem Thê tài là vợ; nữ xem Quan là chồng.</div>
+   <div class="chips"><button class="chip${S.info.gt==='nam'?' on':''}" data-info="gt" data-v="nam">Nam</button><button class="chip${S.info.gt==='nu'?' on':''}" data-info="gt" data-v="nu">Nữ</button></div></div>
+  <div class="field"><div class="flabel">Tuổi</div><div class="fhint">Dùng cho các mốc: trẻ dưới 12, pháp lệnh trước 40, phúc 35 và 34–38 tuổi.</div><input class="inp" id="i-tuoi" type="number" inputmode="numeric" min="1" max="120" placeholder="Ví dụ: 32" value="${esc(S.info.tuoi)}"></div>
+  <div class="field"><div class="flabel">Ảnh chân dung (tùy chọn)</div><div class="fhint">Ảnh chỉ để đối chiếu khi chọn đặc điểm — luôn hiện ở đầu màn hình. Ảnh không rời khỏi máy.</div>
+   <div class="upload${S.img?' has':''}" id="up">${S.img?`<img src="${S.img}" alt="ảnh">`:'📷 Chạm để chọn ảnh'}</div></div>
+  <div class="note">Mẹo quan sát: nhìn chính diện, ánh sáng đều, mặt thư giãn. Nét nào chưa chắc thì bỏ qua — bỏ trống tốt hơn chọn sai.</div>`;
+}
+function stepBody(i){ const st=STEPS[i]; return st.id==='info'?infoHTML():st.f.map(fieldHTML).join(''); }
+function stepCount(i){ const st=STEPS[i]; if(st.id==='info') return [(S.info.gt?1:0)+(S.info.ten?1:0)+(S.info.tuoi?1:0),3]; return [st.f.filter(k=>any(S.d,k)).length, st.f.length]; }
+
+function renderWizard(){
+  const i=UI.step, st=STEPS[i];
+  const dots=STEPS.map((s,j)=>`<i class="${j<i?'done':(j===i?'cur':'')}"></i>`).join('');
+  $('#wiz').innerHTML=`<div class="steps">${dots}</div><div class="stepmeta"><span>Bước ${i+1}/${STEPS.length}</span><span>${stepCount(i)[0]}/${stepCount(i)[1]} mục</span></div>
+   <div class="card fade"><div class="card-pad"><h2 class="h2">${st.t} ${st.el?elTag(st.el):''}</h2><p class="sub">${st.s}</p><hr class="rule">${stepBody(i)}</div></div>`;
+  const last=i===STEPS.length-1;
+  $('#nav-in').innerHTML=`${i>0?'<button class="btn btn-ghost" id="b-prev">‹ Lùi</button>':''}<button class="btn btn-gold" id="b-next">${last?'✦ Luận giải':'Tiếp ›'}</button>`;
+  $('#b-next').onclick=()=>{ if(last) doAnalyze(); else { if(i===0&&!S.info.gt){toast('Hãy chọn giới tính');return;} UI.step++; renderWizard(); scrollTo(0,0);} };
+  const p=$('#b-prev'); if(p) p.onclick=()=>{UI.step--;renderWizard();scrollTo(0,0)};
+  bindInputs();
+}
+function renderForm(){
+  $('#formv').innerHTML=STEPS.map((st,i)=>{const [a,b]=stepCount(i);return `<div class="card acc${i===0?' open':''}" data-i="${i}"><div class="acc-h"><div class="t">${st.t}<small>${st.s}</small></div><span class="badge${a===b?' full':''}">${a}/${b}</span><span class="chev">▾</span></div><div class="acc-b">${stepBody(i)}</div></div>`}).join('');
+  document.querySelectorAll('#formv .acc-h').forEach(h=>h.onclick=()=>h.parentElement.classList.toggle('open'));
+  $('#nav-in').innerHTML=`<button class="btn btn-ghost" id="b-clear">Làm mới</button><button class="btn btn-gold" id="b-go">✦ Luận giải</button>`;
+  $('#b-go').onclick=doAnalyze; $('#b-clear').onclick=resetAll;
+  bindInputs();
+}
+function refreshBadges(){ if(UI.mode!=='form') { const m=document.querySelector('.stepmeta span:last-child'); if(m){const c=stepCount(UI.step);m.textContent=c[0]+'/'+c[1]+' mục'} return; }
+  document.querySelectorAll('#formv .acc').forEach(a=>{const [x,y]=stepCount(+a.dataset.i);const b=a.querySelector('.badge');b.textContent=x+'/'+y;b.classList.toggle('full',x===y)}); }
+
+function bindInputs(){
+  const root=UI.mode==='wizard'?$('#wiz'):$('#formv');
+  root.querySelectorAll('.chip[data-k]').forEach(c=>c.onclick=()=>{
+    const k=c.dataset.k, v=c.dataset.v, f=F[k];
+    if(f.m){ let a=Array.isArray(S.d[k])?[...S.d[k]]:[];
+      if(v==='khong') a=a.includes('khong')?[]:['khong'];
+      else { a=a.filter(x=>x!=='khong'); a=a.includes(v)?a.filter(x=>x!==v):[...a,v]; }
+      if(a.length) S.d[k]=a; else delete S.d[k];
+    } else { if(S.d[k]===v) delete S.d[k]; else S.d[k]=v; }
+    const fd=c.closest('.field'); fd.outerHTML=fieldHTML(k); bindInputs(); refreshBadges(); saveDraft();
+  });
+  root.querySelectorAll('.chip[data-info]').forEach(c=>c.onclick=()=>{S.info.gt=c.dataset.v;c.parentElement.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===c));refreshBadges();saveDraft()});
+  const t=root.querySelector('#i-ten'); if(t) t.oninput=()=>{S.info.ten=t.value;saveDraft()};
+  const a=root.querySelector('#i-tuoi'); if(a) a.oninput=()=>{S.info.tuoi=a.value;saveDraft()};
+  const u=root.querySelector('#up'); if(u) u.onclick=()=>$('#file').click();
+}
+$('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{
+  const img=new Image();img.onload=()=>{const c=document.createElement('canvas');const sc=Math.min(1,900/Math.max(img.width,img.height));c.width=img.width*sc;c.height=img.height*sc;c.getContext('2d').drawImage(img,0,0,c.width,c.height);S.img=c.toDataURL('image/jpeg',.85);updateDock();renderInput();};img.src=r.result};r.readAsDataURL(f);e.target.value=''};
+function updateDock(){const dk=$('#dock');if(S.img){$('#dock-img').src=S.img;dk.classList.add('show')}else dk.classList.remove('show')}
+$('#dock').onclick=e=>{if(e.target.id==='dock-x')return;openSheet(`<img src="${S.img}" alt="ảnh">`,true)};
+$('#dock-x').onclick=e=>{e.stopPropagation();S.img=null;updateDock();renderInput()};
+
+function renderInput(){ if(UI.mode==='wizard'){$('#wiz').classList.remove('hide');$('#formv').classList.add('hide');renderWizard()} else {$('#formv').classList.remove('hide');$('#wiz').classList.add('hide');renderForm()} }
+document.querySelectorAll('#mode-seg button').forEach(b=>b.onclick=()=>{UI.mode=b.dataset.m;document.querySelectorAll('#mode-seg button').forEach(x=>x.classList.toggle('on',x===b));renderInput()});
+
+function resetAll(){ if(!confirm('Xóa toàn bộ đặc điểm đã chọn?'))return; S={info:{ten:'',gt:'',tuoi:''},d:{},img:null,override:null}; saveDraft(); updateDock(); UI.step=0; showInput(); toast('Đã làm mới'); }
+
+/* ---- sheet ---- */
+function openSheet(html,img){const s=$('#sheet-in');s.className='sheet-in'+(img?' img':'');s.innerHTML=html;$('#sheet').classList.add('show')}
+$('#sheet').onclick=e=>{if(e.target.id==='sheet')$('#sheet').classList.remove('show')};
+
+/* ---- radar ---- */
+function radar(labels,vals,colors,main){
+  const W=220,cx=110,cy=112,r=74,n=labels.length;
+  const pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/n;return [cx+Math.cos(a)*r*v/100,cy+Math.sin(a)*r*v/100]};
+  let g='';
+  [25,50,75,100].forEach(l=>{g+=`<polygon points="${labels.map((_,i)=>pt(i,l).join(',')).join(' ')}" fill="none" stroke="#e4d6bd" stroke-width="1"/>`});
+  labels.forEach((_,i)=>{const p=pt(i,100);g+=`<line x1="${cx}" y1="${cy}" x2="${p[0]}" y2="${p[1]}" stroke="#e4d6bd"/>`});
+  const poly=vals.map((v,i)=>pt(i,Math.max(v??0,4)).join(',')).join(' ');
+  g+=`<polygon points="${poly}" fill="${main}33" stroke="${main}" stroke-width="2" stroke-linejoin="round"/>`;
+  vals.forEach((v,i)=>{const p=pt(i,Math.max(v??0,4));g+=`<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="${colors[i]}"/>`});
+  labels.forEach((l,i)=>{const p=pt(i,128);g+=`<text x="${p[0]}" y="${p[1]+4}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${colors[i]}" font-family="Be Vietnam Pro,sans-serif">${l}</text><text x="${p[0]}" y="${p[1]+17}" text-anchor="middle" font-size="10" fill="#8a7660" font-family="Be Vietnam Pro,sans-serif">${vals[i]??'–'}</text>`});
+  return `<svg viewBox="0 0 ${W} 236" role="img">${g}</svg>`;
+}
+
+/* ---- results ---- */
+function acc(id,title,sub,body,open){return `<div class="card acc${open?' open':''}" id="sec-${id}"><div class="acc-h"><div class="t">${title}${sub?`<small>${sub}</small>`:''}</div><span class="chev">▾</span></div><div class="acc-b">${body}</div></div>`}
+function ul(L){return L.length?`<ul>${L.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p class="mini">Chưa chọn đặc điểm nào ở bộ vị này.</p>'}
+function organ(title,h,q,L){return `<div class="organ"><h4>${title}${h?` <span class="el" style="background:${HCOLOR[h]}">${HANH[h]}</span>`:''}${q&&q.score!=null?` <span style="margin-left:auto">${bandPill(q.band)}</span>`:''}</h4>${ul(L)}</div>`}
+
+function doAnalyze(){
+  if(!S.info.gt){ toast('Cần chọn giới tính trước'); UI.mode='wizard'; UI.step=0; document.querySelectorAll('#mode-seg button').forEach(x=>x.classList.toggle('on',x.dataset.m==='wizard')); showInput(); return; }
+  const inf=inferTuong(S.d);
+  if(inf.empty&&!S.override){ toast('Hãy chọn Khuôn mặt tổng thể hoặc thêm đặc điểm để định tướng'); UI.mode='wizard'; UI.step=1; showInput(); return; }
+  renderResult();
+}
+function showInput(){ $('#scr-result').classList.add('hide'); $('#scr-input').classList.remove('hide'); renderInput(); scrollTo(0,0); }
+
+function renderResult(){
+  const R=analyze(S); UI.R=R; const T=R.T, t=TUONG[T], d=R.d;
+  const col=HCOLOR[T];
+  const lead=composeLead(R);
+  /* hero */
+  let h=`<div class="card fade"><div class="hero">
+    <div class="who">${R.gt==='nam'?'Nam':'Nữ'}${R.tuoi?` · ${R.tuoi} tuổi`:''} · ${R.filled}/${Object.keys(F).length} đặc điểm</div>
+    <div class="name">${esc(R.ten)||'Lá số diện tướng'}</div>
+    <div class="seal" style="background:radial-gradient(circle at 35% 30%,${col}cc,${col})"><div><b>${HANH[T]}</b><span>${T==='thuy'?'BIẾN HÓA':'CHỮ '+t.duc.toUpperCase()}</span></div></div>
+    <div class="tag">“${t.tag}”</div>
+    <div class="mini">${S.override?'Tướng do người xem chọn · ':'App tự suy · '}chạm để đổi:</div>
+    <div class="ovr">${['kim','moc','hoa','tho','thuy'].map(k=>`<button class="chip${k===T?' on':''}" data-ov="${k}" style="${k===T?`background:${HCOLOR[k]};border-color:${HCOLOR[k]}`:''}">${HANH[k]} ${R.inf.pct[k]}%${k===R.inf.main?' ★':''}</button>`).join('')}</div>
+    ${R.filled<18?`<div class="note" style="text-align:left">Mới có ${R.filled} đặc điểm — luận giải sẽ sâu và chính xác hơn khi bổ sung thêm.</div>`:''}
+  </div></div>`;
+  h+=acc('tong','Tổng luận','Lời luận của bậc thầy — đọc trước tiên',`<div class="lead">${lead.map(p=>`<p>${p}</p>`).join('')}</div>`,true);
+  /* charts */
+  const ltv=LT_ORDER.map(k=>R.lt[k].score), ltc=LT_ORDER.map(k=>HCOLOR[R.lt[k].h]);
+  h+=acc('chart','Đồ hình Ngũ hành & Lục thân','Tỷ lệ khí chất các tướng · độ vượng từng cung',`<div class="charts"><figure>${radar(ORDER5.map(k=>HANH[k]),ORDER5.map(k=>R.inf.pct[k]),ORDER5.map(k=>HCOLOR[k]),col)}<figcaption>Khí chất Ngũ hành</figcaption></figure><figure>${radar(['Huynh đệ','Thê tài','Quan','Phụ mẫu','Tử tôn'],ltv,ltc,col)}<figcaption>Lục thân</figcaption></figure></div>
+   ${[['Phúc về thân (mũi)',R.phuc.than],['Phúc về tâm (tai)',R.phuc.tam],['Phúc về trí (trán 3 · mắt 7)',R.phuc.tri],['Vùng nghị lực',R.nghiLuc]].map(([l,v])=>`<div class="meter"><div class="lbl"><span>${l}</span><span>${v??'–'}</span></div><div class="bar"><i style="width:${v??0}%;background:${BANDCOL[band(v)]}"></i></div></div>`).join('')}`,true);
+  /* cấu trúc tâm lý */
+  let ct='';
+  if(T==='thuy'){ ct+=`<p class="p">${t.tc}</p>`; R.comps.forEach(c=>{const tc=TUONG[c];ct+=`<div class="organ"><h4>Thành phần ${HANH[c]} · chữ ${tc.duc} <span class="el" style="background:${HCOLOR[c]}">${R.inf.pct[c]}%</span></h4><p class="p">${tc.tc}</p><div>${tc.manh.map(x=>pill(x,'g')).join('')}${tc.yeu.map(x=>pill(x,'b')).join('')}</div></div>`}); }
+  else { ct+=`<p class="p"><span class="k">Đặc điểm chính:</span> ${t.core}.</p><p class="p"><span class="k">Tính cách:</span> ${t.tc}</p><div class="p"><span class="k">Điểm mạnh:</span><br>${t.manh.map(x=>pill(x,'g')).join('')}</div><div class="p"><span class="k">Điểm yếu:</span><br>${t.yeu.map(x=>pill(x,'b')).join('')}</div>`; }
+  ct+=`<div class="quote">Cái khổ gốc: ${t.khoGoc}</div><p class="p"><span class="k">Môi trường phù hợp:</span> ${t.mt}</p>`;
+  ct+=`<p class="p mini">Nguyên tắc thành công của Tứ diện tướng: <b>Nhất tâm</b> — hiểu rõ tâm mình, đặt mình vào môi trường phù hợp. Mất bản tâm (do giáo dục gia đình hoặc môi trường không hợp) sẽ dẫn đến tướng phản. Mỗi tướng có công dụng riêng, phát huy đúng chỗ thì thành.</p>`;
+  h+=acc('cautruc','Cấu trúc tâm lý đồng nhất','Bước 1 của barem: bản tính gốc của tướng chính',ct,false);
+  /* GXB */
+  let gx='';
+  R.gxbList.forEach(G=>{
+    const colH=(title,icon,arr,cls)=>`<div class="col"><h4>${icon} ${title}</h4>${arr.map(x=>`<div class="it ${x.y?'y':'n'}"><span class="m">${x.y?'✓':'·'}</span><span class="tt"><b>${x.t}</b>${x.y?`<em>${x.mean}</em>`:''}</span></div>`).join('')}</div>`;
+    gx+=`${R.gxbList.length>1?`<div class="h3">Tướng ${HANH[G.h]}</div>`:''}<div class="tri">${colH('GIA TĂNG','▲',G.gt)}${colH('XUNG ĐỘT','⇄',G.xd)}${colH('BÙ KHUYẾT','◔',G.bk)}</div>`;
+  });
+  const sm=R.gxbSum, pc=(a,b)=>b?rnd(a/b*100):0;
+  gx+=`<div style="margin-top:12px">${[['Độ thuần (gia tăng)',pc(sm.gt,sm.gtN),'#6b3f1d'],['Độ giằng co (xung đột)',pc(sm.xd,sm.xdN),'#b8452f'],['Độ cân bằng (bù khuyết)',pc(sm.bk,sm.bkN),'#3c8a4c']].map(([l,v,c])=>`<div class="meter"><div class="lbl"><span>${l}</span><span>${v}%</span></div><div class="bar"><i style="width:${v}%;background:${c}"></i></div></div>`).join('')}</div>`;
+  gx+=`<p class="p mini" style="margin-top:8px">Gia tăng làm bản tướng đậm thêm (mạnh cả điểm mạnh lẫn điểm yếu); Xung đột là nơi tâm và tướng giằng co — nguồn của cái khổ; Bù khuyết là nét bù chỗ thiếu, đưa tướng về hài hòa. Tướng đẹp là tướng hài hòa – hữu tình, không thái quá.</p>`;
+  h+=acc('gxb','Gia tăng · Xung đột · Bù khuyết',`${sm.gt} gia tăng · ${sm.xd} xung đột · ${sm.bk} bù khuyết`,gx,true);
+  /* Tam đình */
+  const tdTxt={thuong:{troi:'Thượng đình nổi trội — trí lực mạnh: tư duy, trí tuệ, cái tôi trong suy nghĩ phát triển.',can:'Thượng đình cân đối — trí lực vừa vặn.',kem:'Thượng đình ngắn/hẹp — trí lực cần được nâng đỡ bằng học hỏi.'},trung:{troi:'Trung đình nổi trội — hoạt lực dồi dào: năng lượng sống, sinh mệnh lực, khả năng hành động mạnh.',can:'Trung đình cân đối — hoạt lực ổn định.',kem:'Trung đình ngắn/yếu — sinh mệnh lực chưa dồi dào, cần giữ sức.'},ha:{troi:'Hạ đình nổi trội — kết nối xã hội mạnh: giao tiếp, quan hệ là thế mạnh.',can:'Hạ đình cân đối — kết nối xã hội vừa phải.',kem:'Hạ đình ngắn — kết nối xã hội kém nâng đỡ; quan hệ phải chủ động xây.'}};
+  const TL=[]; ['thuong','trung','ha'].forEach(x=>{const v=d['td_'+x]; if(v) TL.push(tdTxt[x][v])});
+  const tr=['thuong','trung','ha'].filter(x=>d['td_'+x]==='troi');
+  if(tr.length===1&&tr[0]==='ha') TL.push('Hạ đình làm trọng — hợp với cách nhìn phương Đông "hướng hạ": thành công nhờ quan hệ, cộng đồng.');
+  if(tr.length===1&&tr[0]==='thuong') TL.push('Thượng đình làm trọng — gần với cách nhìn phương Tây "hướng thượng": thành công nhờ trí tuệ cá nhân.');
+  if(R.cam.parts.length){ const nm={thuong:'Thượng đình',trung:'Trung đình',ha:'Hạ đình'}; TL.push(`<span style="color:var(--bad)"><b>Tướng cắm</b> ở ${joinVi(R.cam.parts.map(p=>optLabel('cam_dot',p).toLowerCase()))} (${joinVi(R.cam.dinh.map(x=>nm[x]))}): bộ phận thái quá, đột biến — bên ngoài có thế mà bên trong không thế. Tới giai đoạn ứng với vùng ấy dễ phát triển rồi đổ.${R.cam.parts.length>=2?' Có từ hai bộ vị cắm trở lên: đời đặc biệt vất vả, gian truân — càng cần giữ mình ở lúc thịnh.':''}</span>`); }
+  else if(has(d,'cam_dot','khong')) TL.push('Không có bộ vị cắm — các phần tương xứng, không thái quá.');
+  h+=acc('tamdinh','Tam đình','Trí lực · Hoạt lực · Kết nối xã hội',ul(TL),false);
+  /* Ngũ quan */
+  const tq=R.Q.tho.parts;
+  let nq=organ('Trán · Ấn đường','tho',tq.tran,luanTran(d,R))+organ('Lông mày · Tóc','moc',R.Q.moc,luanMay(d,R))+organ('Mắt','hoa',R.Q.hoa,luanMat(d,R))+organ('Mũi · Gò má','tho',tq.mui,luanMui(d,R))+organ('Miệng · Răng · Pháp lệnh','kim',R.Q.kim,luanMieng(d,R))+organ('Tai','thuy',R.Q.thuy,luanTai(d,R))+organ('Cằm · Cổ','tho',tq.cam,luanCam(d,R));
+  h+=acc('nguquan','Ngũ quan & bộ vị','Bộ phận nào công dụng nấy',nq,false);
+  /* Thần */
+  h+=acc('than','Thần & Hình – Thần','Ngũ thần · tâm và mệnh',`${luanHinhThan(R).map(x=>`<p class="p">${x}</p>`).join('')}<p class="mini">Thần phản ánh cách biểu lộ cảm xúc — không dùng để luận tính cách, mà để hiểu cách một người tương tác với môi trường.</p>`,false);
+  /* Phúc */
+  h+=acc('phuc','Phúc & Vận','Thân · Tâm · Trí — tiên thiên và hậu thiên',luanPhuc(R).map(x=>`<p class="p">${x}</p>`).join(''),false);
+  /* Nhóm & đặc biệt */
+  let nb='';
+  if(R.nhom.length) nb+=R.nhom.map(n=>`<div class="organ"><h4>${n.t}${n.n?` <span class="pill n" style="margin-left:auto">${n.n}/${n.of}</span>`:''}</h4><p class="p">${n.y}</p></div>`).join('');
+  else nb+='<p class="mini">Chưa khớp rõ nhóm tính cách đặc thù nào (Kết nối, Chinh phục, Động lực thừa nhận, Thỏa mãn, Thụ động).</p>';
+  nb+=`<div class="h3">Tướng tài · ${R.tai.n}/7</div><div>${R.tai.c.map(c=>pill((c[1]?'✓ ':'· ')+c[0],c[1]?'g':'n')).join('')}</div><p class="p mini">${R.tai.n>=5?'Gần đủ tướng tài: năng lực hiệu triệu (ngôn ngữ, hành vi, nhân cách), vận dụng nguồn lực tốt, cụ thể hóa được vấn đề trừu tượng.':R.tai.n>=3?'Có một phần tướng tài — cần rèn thêm những tiêu chí còn thiếu.':'Tướng tài chưa hiện — sức mạnh nằm ở chỗ khác, hãy tìm đúng công dụng của tướng mình.'}</p>`;
+  if(R.phan.level!=='khong'&&T!=='thuy') nb+=`<div class="warnbox"><b>${R.phan.level==='ro'?'Dấu hiệu phản tướng':'Mầm phản tướng'}</b> (${joinVi(R.phan.sig)}): ${t.phan} Phản tướng chủ yếu do mất bản tâm — từ giáo dục gia đình hoặc môi trường không phù hợp. Đưa mình về đúng môi trường là con đường trở lại.</div>`;
+  if(is(d,'dinh_dau','lom')) nb+=`<div class="warnbox"><b>Đỉnh đầu lõm</b>: dễ trầm uất, suy nghĩ lệch, dễ bị cuốn theo tà thuyết (tài liệu xếp vào phản Mộc) — cần môi trường lành và người dẫn dắt chính.</div>`;
+  if(is(d,'nhan_trung','nong')&&(T==='moc'||R.comps.includes('moc'))) nb+=`<div class="warnbox"><b>Tướng Mộc, nhân trung nông ngắn</b>: thiếu sự yêu thương từ gia đình — chữ Nhân cần được bù bằng các mối quan hệ lành.</div>`;
+  if(R.khoHopTac.length>=2) nb+=`<div class="warnbox"><b>Khó hợp tác làm ăn</b> (nam): ${joinVi(R.khoHopTac)}.</div>`;
+  if(R.vayMuon) nb+=`<div class="warnbox"><b>Chuyện vay – mượn</b>: tướng Mộc kèm răng thưa / cười hở lợi / mắt to — nên rạch ròi tiền nong.</div>`;
+  if(R.hoaDuc) nb+=`<div class="warnbox"><b>Tướng Hỏa, gò má nhiều thịt, dày, bóng</b>: dục tính cao, cảm xúc thất thường, chữ tín dễ lung lay.</div>`;
+  h+=acc('nhom','Nhóm tính cách & tướng đặc biệt','Tướng tài · phản tướng · các lưu ý',nb,false);
+  /* Lục thân */
+  let lt=`<p class="p mini">Diện tướng <b>${HANH[T]}</b> — từ đó định năm cung theo sinh khắc. Điểm là độ vượng của bộ vị tương ứng.</p>`;
+  lt+=LT_ORDER.map(k=>{const L=R.lt[k];return `<div class="lt"><div class="dot" style="background:${HCOLOR[L.h]}">${HANH[L.h]}</div><div class="bd"><b>${L.ten}</b> · ${L.bovi}<div>${L.y} — ${L.why}</div></div><div class="sc" style="color:${BANDCOL[L.band]}">${L.score??'–'}</div></div>`}).join('');
+  lt+=LT_ORDER.filter(k=>R.lt[k].band!=='na').map(k=>`<p class="p"><span class="k">${R.lt[k].ten}:</span> ${LTV[k][R.lt[k].band]}</p>`).join('');
+  h+=acc('lucthan','Lục thân','Huynh đệ · Thê tài · Quan · Phụ mẫu · Tử tôn',lt,true);
+  /* Aspect */
+  h+=acc('khiacanh','Hỏi theo khía cạnh','Chọn điều muốn hỏi — luận sâu qua Lục thân',`<div class="asp">${ASPECTS.map(a=>`<button data-asp="${a.k}" class="${a.k===UI.aspect?'on':''}"><span class="ic">${a.ic}</span>${a.t}</button>`).join('')}</div><div id="asp-body">${aspectHTML(UI.aspect,R)}</div>`,true);
+  /* Mâu thuẫn */
+  let mt='<p class="p mini">Barem 4 bước: (1) cấu trúc tâm lý đồng nhất → (2) tìm nét mâu thuẫn → (3) giả định cái khổ → (4) giải pháp: khi không đổi được hiện thực, hãy đổi thái độ với hiện thực.</p>';
+  if(R.conf.length) mt+=R.conf.map(c=>`<div class="conf"><div class="ch">${esc(c.t)}</div><div class="cb"><div><span class="lb">Mâu thuẫn</span>${c.mau}</div><div><span class="lb">Cái khổ</span>${c.kho}</div><div><span class="lb">Hóa giải</span>${c.giai}</div></div></div>`).join('');
+  else mt+='<div class="goodbox">Chưa thấy mâu thuẫn lớn giữa các bộ vị đã chọn — tướng khá đồng nhất. Cái khổ (nếu có) nằm ở chính điểm yếu gốc của tướng: '+lc(t.khoGoc)+'</div>';
+  if(R.conf.length>=3||R.ht.rel==='batphoi') mt+=`<div class="quote">Tâm đối nghịch với mệnh thì khổ — nhưng khổ tạo nên người xuất chúng. Nhìn thấy cái khổ để điều chỉnh, gỡ rối, chỉnh tâm.</div>`;
+  h+=acc('mauthuan','Mâu thuẫn · Cái khổ · Hóa giải',`${R.conf.length} điểm cần lưu tâm`,mt,true);
+  /* Kết */
+  h+=`<div class="card"><div class="card-pad closing"><div class="h2" style="font-size:19px">Lời kết</div><p style="margin:6px 0">Tướng không cố định — nó đổi theo thái độ và cách sống. Hài hòa và hữu tình là thước đo của tướng đẹp; nhất tâm là chìa khóa của hậu phúc.</p><div class="three">${['Không phân thiện ác','Không định chuyện hợp tan','Không định sinh tử'].map(x=>pill(x,'n')).join('')}</div><p class="mini" style="margin:0">Ba điều cấm trong xem tướng — luận để hiểu mình, hiểu người, không để phán xét.</p></div></div>`;
+  h+=`<div class="res-actions"><button class="btn btn-light" id="r-copy">⧉ Sao chép bài luận</button><button class="btn btn-light" id="r-save">✚ Lưu hồ sơ</button><button class="btn btn-light" id="r-open">⊕ Mở tất cả mục</button><button class="btn btn-light" id="r-new">↺ Người mới</button></div>`;
+  $('#scr-result').innerHTML=h;
+  $('#scr-input').classList.add('hide'); $('#scr-result').classList.remove('hide');
+  $('#nav-in').innerHTML=`<button class="btn btn-ghost" id="b-edit">‹ Sửa đặc điểm</button><button class="btn btn-gold" id="b-save2">Lưu hồ sơ</button>`;
+  $('#b-edit').onclick=()=>showInput(); $('#b-save2').onclick=saveRecord;
+  document.querySelectorAll('#scr-result .acc-h').forEach(x=>x.onclick=()=>x.parentElement.classList.toggle('open'));
+  document.querySelectorAll('[data-ov]').forEach(b=>b.onclick=()=>{S.override=b.dataset.ov===R.inf.main?null:b.dataset.ov;renderResult();toast('Đã luận lại theo tướng '+HANH[b.dataset.ov])});
+  document.querySelectorAll('[data-asp]').forEach(b=>b.onclick=()=>{UI.aspect=b.dataset.asp;document.querySelectorAll('[data-asp]').forEach(x=>x.classList.toggle('on',x===b));$('#asp-body').innerHTML=aspectHTML(UI.aspect,UI.R)});
+  $('#r-copy').onclick=copyText; $('#r-save').onclick=saveRecord; $('#r-new').onclick=()=>{S={info:{ten:'',gt:'',tuoi:''},d:{},img:null,override:null};saveDraft();updateDock();UI.step=0;showInput()};
+  $('#r-open').onclick=()=>document.querySelectorAll('#scr-result .acc').forEach(a=>a.classList.add('open'));
+  scrollTo(0,0);
+}
+
+function copyText(){
+  const box=$('#scr-result').cloneNode(true);
+  box.querySelectorAll('.acc').forEach(a=>a.classList.add('open'));
+  box.querySelectorAll('.res-actions,.ovr,.asp,svg').forEach(x=>x.remove());
+  const tmp=document.createElement('div');tmp.style.cssText='position:fixed;left:-9999px;top:0;width:500px';tmp.appendChild(box);document.body.appendChild(tmp);
+  const txt='DIỆN TƯỚNG HỌC — TIEN.TQN\n\n'+box.innerText.replace(/\n{3,}/g,'\n\n').replace(/[▾]/g,'').trim();
+  document.body.removeChild(tmp);
+  const done=()=>toast('Đã sao chép bài luận');
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done,()=>fallback(txt,done)); else fallback(txt,done);
+}
+function fallback(txt,done){const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){toast('Không sao chép được')}document.body.removeChild(ta)}
+
+/* ---- records ---- */
+function saveRecord(){
+  const R=UI.R; if(!R) return;
+  const list=store.get(LS_REC,[]);
+  const rec={id:Date.now(),info:{...S.info},d:JSON.parse(JSON.stringify(S.d)),override:S.override,T:R.T,time:new Date().toLocaleString('vi-VN')};
+  const i=list.findIndex(x=>x.info.ten&&x.info.ten===rec.info.ten&&x.info.gt===rec.info.gt);
+  if(i>=0) list[i]=rec; else list.unshift(rec);
+  toast(store.set(LS_REC,list.slice(0,60))?'Đã lưu hồ sơ':'Trình duyệt không cho lưu');
+}
+$('#btn-records').onclick=()=>{
+  const list=store.get(LS_REC,[]);
+  let h=`<div class="h2" style="font-size:20px">Hồ sơ đã lưu</div><p class="sub">${list.length} người · lưu trên máy này</p><hr class="rule">`;
+  h+=list.length?list.map(r=>`<div class="rec"><div class="dot" style="background:${HCOLOR[r.T]}">${HANH[r.T][0]}</div><div class="bd"><b>${esc(r.info.ten)||'Không tên'}</b><span>${r.info.gt==='nam'?'Nam':'Nữ'}${r.info.tuoi?' · '+esc(r.info.tuoi)+' tuổi':''} · ${HANH[r.T]} · ${r.time}</span></div><button class="btn btn-light" style="padding:7px 11px;font-size:13px" data-load="${r.id}">Mở</button><button class="btn btn-light" style="padding:7px 10px;font-size:13px;color:var(--bad)" data-del="${r.id}">✕</button></div>`).join(''):'<p class="mini">Chưa có hồ sơ nào. Sau khi luận giải, bấm "Lưu hồ sơ".</p>';
+  openSheet(h);
+  document.querySelectorAll('[data-load]').forEach(b=>b.onclick=()=>{const r=list.find(x=>x.id==b.dataset.load);S={info:{...r.info},d:r.d,img:null,override:r.override||null};saveDraft();updateDock();$('#sheet').classList.remove('show');renderResult()});
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(!confirm('Xóa hồ sơ này?'))return;store.set(LS_REC,list.filter(x=>x.id!=b.dataset.del));$('#btn-records').onclick()});
+};
+
+/* init */
+updateDock(); renderInput();
+</script>
+</body>
+</html>
